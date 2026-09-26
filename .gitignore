@@ -12,8 +12,9 @@
 *.xdv
 main.pdf
 .tmp/
+build/
 
 # Local research material and third-party source checkouts.
 # Their publication rights and reuse terms need separate review.
-HUAS-Beamer-Research/
+assets/research/
 examples/references/

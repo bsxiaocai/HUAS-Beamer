@@ -19,6 +19,6 @@
 
 ## 下一阶段注意
 
-进入下一阶段前，重新阅读 `DEVELOPMENT_PROMPT.md` 与本总结。文档要求先完成 GitHub 建仓指导与用户后续操作，再进入 Phase 1。Phase 1 开始时应重新研究相关参考项目的主题模块划分，并持续把新参考代码下载到 `examples/`；每次改动后实际使用 XeLaTeX 编译、检查日志和 Git diff。
+进入下一阶段前，重新阅读开发总纲与本总结。开发总纲现已移至 `docs/DEVELOPMENT_PROMPT.md`。文档要求先完成 GitHub 建仓指导与用户后续操作，再进入 Phase 1。Phase 1 开始时应重新研究相关参考项目的主题模块划分，并持续把新参考代码下载到 `examples/`；每次改动后实际使用 XeLaTeX 编译、检查日志和 Git diff。
 
 将来使用视觉素材前，先核对来源、版权、文件格式和可读性；所有正式素材都应放入 `assets/`。当前本地 PDF 是验证产物，不纳入 Git。
