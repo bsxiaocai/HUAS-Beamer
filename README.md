@@ -12,7 +12,7 @@ xelatex -output-directory=build main.tex
 xelatex -output-directory=build main.tex
 ```
 
-若 Windows 终端找不到 `xelatex`，请将 TeX Live 的 `bin/windows` 目录加入 PATH。本机验证使用 `D:\Texlive\texlive\2025\bin\windows\xelatex.exe`。
+若 Windows 终端找不到 `xelatex`，请将 TeX Live 的 `bin/windows` 目录加入 PATH。
 
 输出文件为 `build/main.pdf`。编辑 `main.tex` 中的标题、作者和普通页面内容即可开始使用。`\usetheme{HUAS}` 加载主题入口，四个 `beamer*themeHUAS.sty` 分别管理颜色、字体、内层和外层样式；`theme/` 存放内部素材加载代码。
 
@@ -31,4 +31,8 @@ xelatex -output-directory=build main.tex
 
 `assets/research/` 存放研究素材，尚未确认全部素材适合公开分发。`examples/references/` 存放开发总纲提到的第三方参考项目，不属于 HUAS-Beamer 源码；版本和许可线索见 `examples/README.md`。开发总纲及阶段总结位于 `docs/`。当前调色板属于 **HUAS-Beamer Derived Design System**，不代表学校官方视觉标准。
 
-HUAS-Beamer 是基于公开 HUAS 视觉材料设计的独立项目，并非湖南文理学院官方模板。项目计划开源，但代码许可证和学校素材的分发许可尚待确认。
+## 许可与声明
+
+HUAS-Beamer 自主开发的软件源码计划按 LPPL-1.3c 发布，具体文件见 `NOTICE.md`，许可证全文见 `LICENSE`。源码中的版权持有人与 Current Maintainer 目前仍为占位符，公开发布前必须确认并替换。
+
+湖南文理学院名称、校徽、Logo 等官方身份素材不因源码使用 LPPL 而获得 LPPL 授权。HUAS-Beamer 是独立开发项目，并非湖南文理学院官方模板；素材权利与第三方参考项目的说明见 `NOTICE.md`。
