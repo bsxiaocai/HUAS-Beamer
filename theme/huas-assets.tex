@@ -1,0 +1,13 @@
+% Internal asset loader; the public command is \HUASsetlogo{<image path>}.
+\let\huas@logofile\@empty
+\newcommand{\HUASsetlogo}[1]{%
+  \IfFileExists{#1}{\def\huas@logofile{#1}}{%
+    \let\huas@logofile\@empty
+    \PackageWarning{beamerthemeHUAS}{Logo image not found: #1}%
+  }%
+}
+\newcommand{\huas@insertlogo}{%
+  \ifx\huas@logofile\@empty\else
+    \includegraphics[height=0.34cm]{\huas@logofile}%
+  \fi
+}

@@ -1,11 +1,21 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemeHUAS}[2026/09/26 Phase 0 minimal HUAS Beamer theme]
+\ProvidesPackage{beamerthemeHUAS}[2026/09/26 Phase 1 HUAS Beamer theme]
+
+\newif\ifhuas@footer
+\huas@footertrue
+\newif\ifhuas@logo
+\huas@logofalse
+\DeclareOptionBeamer{footer}{\huas@footertrue}
+\DeclareOptionBeamer{nofooter}{\huas@footerfalse}
+\DeclareOptionBeamer{logo}{\huas@logotrue}
+\DeclareOptionBeamer{nologo}{\huas@logofalse}
+\ProcessOptionsBeamer
 
 \mode<presentation>
-% Project-derived starting color; not an official university VI value.
-\definecolor{HUASRed}{HTML}{A34A42}
-\setbeamercolor{structure}{fg=HUASRed}
-\setbeamercolor{title}{fg=HUASRed}
-\setbeamercolor{frametitle}{fg=HUASRed}
+\usecolortheme{HUAS}
+\usefonttheme{HUAS}
+\useinnertheme{HUAS}
+\input{theme/huas-assets.tex}
+\useoutertheme{HUAS}
 \setbeamertemplate{navigation symbols}{}
 \mode<all>

@@ -1,0 +1,26 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerouterthemeHUAS}[2026/09/26 HUAS Beamer outer theme]
+
+\mode<presentation>
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=\beamer@leftmargin,
+    rightskip=\beamer@rightmargin,sep=0.15cm]{frametitle}
+    \usebeamerfont{frametitle}\strut\insertframetitle\strut
+  \end{beamercolorbox}%
+}
+
+\ifhuas@footer
+  \setbeamertemplate{footline}{%
+    \leavevmode
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.2ex,
+      leftskip=\beamer@leftmargin,rightskip=\beamer@rightmargin]{footline}
+      \usebeamerfont{footline}\insertshortinstitute\hfill
+      \insertframenumber/\inserttotalframenumber
+      \ifhuas@logo\hspace{0.5em}\huas@insertlogo\fi
+    \end{beamercolorbox}%
+  }
+\else
+  \setbeamertemplate{footline}{}
+\fi
+\mode<all>
