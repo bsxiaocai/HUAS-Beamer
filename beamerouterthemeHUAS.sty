@@ -1,9 +1,9 @@
-% Copyright (C) 2026 [COPYRIGHT_HOLDER]
+% Copyright (C) 2026 bsxiaocai
 % SPDX-License-Identifier: LPPL-1.3c
 % This file is part of HUAS-Beamer and may be distributed and/or modified
 % under the conditions of the LaTeX Project Public License, version 1.3c.
 % LPPL maintenance status: maintained.
-% Current Maintainer: [CURRENT_MAINTAINER]. See LICENSE and NOTICE.md.
+% Current Maintainer: bsxiaocai. See LICENSE and NOTICE.md.
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamerouterthemeHUAS}[2026/09/26 HUAS Beamer outer theme]
@@ -15,6 +15,8 @@
     rightskip=\beamer@rightmargin,sep=0.15cm]{frametitle}
     \usebeamerfont{frametitle}\strut\insertframetitle\strut
   \end{beamercolorbox}%
+  \nointerlineskip
+  \hbox to\textwidth{\color{HUASLine}\leaders\hrule height0.4pt\hfill}%
 }
 
 \ifhuas@footer
@@ -24,7 +26,11 @@
       leftskip=\beamer@leftmargin,rightskip=\beamer@rightmargin]{footline}
       \usebeamerfont{footline}\insertshortinstitute\hfill
       \insertframenumber/\inserttotalframenumber
-      \ifhuas@logo\hspace{0.5em}\huas@insertlogo\fi
+      \ifhuas@logo
+        \ifx\huas@logofile\@empty\else
+          \hspace{0.5em}\huas@insertlogo
+        \fi
+      \fi
     \end{beamercolorbox}%
   }
 \else

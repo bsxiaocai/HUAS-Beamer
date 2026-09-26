@@ -1,29 +1,66 @@
 % !TeX program = xelatex
-% Copyright (C) 2026 [COPYRIGHT_HOLDER]
+% Copyright (C) 2026 bsxiaocai
 % SPDX-License-Identifier: LPPL-1.3c
 % This HUAS-Beamer example may be distributed and/or modified under
 % the conditions of LPPL 1.3c. See LICENSE and NOTICE.md.
 \documentclass[aspectratio=169]{ctexbeamer}
 
-\usetheme{HUAS}
+\usetheme[logo]{HUAS}
+\IfFileExists{assets/research/HUAS-School_badge-white_background.jpg}{%
+  \HUASsetlogo{assets/research/HUAS-School_badge-white_background.jpg}%
+}{}
 
-\title{HUAS-Beamer 最小示例}
+\title{HUAS-Beamer 视觉页面示例}
+\subtitle{人文表达与理性结构}
 \author{HUAS-Beamer 项目}
 \institute{湖南文理学院}
 \date{\today}
 
 \begin{document}
 
-\begin{frame}
+\begin{frame}[plain,noframenumbering]
   \titlepage
 \end{frame}
 
-\begin{frame}{普通内容页}
-  这是一个使用 XeLaTeX 编译的 16:9 中文学术演示页面。
+\section{研究背景与目标}
+{\setbeamercolor{background canvas}{bg=HUASWarmPaper}
+\begin{frame}[plain,noframenumbering]
+  \sectionpage
+\end{frame}}
+
+\begin{frame}{研究背景}
+  面向学术报告的页面应让结论、证据与结构一眼可辨。
   \begin{itemize}
-    \item 基于 \texttt{ctexbeamer}
-    \item 使用独立的 HUAS 主题文件
+    \item 深色正文承担主要信息
+    \item 暖红色只强调关键词与层级
+    \item 校园视觉元素保持辅助地位
   \end{itemize}
 \end{frame}
+
+\begin{frame}{校园视觉与学术内容}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.52\textwidth}
+      \textbf{视觉素材的作用}
+      \begin{itemize}
+        \item 让学校身份清晰可见
+        \item 与研究信息保持适当间距
+        \item 图片只承担辅助说明
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.43\textwidth}
+      \IfFileExists{assets/research/reference_2.png}{%
+        \includegraphics[width=\linewidth]{assets/research/reference_2.png}%
+      }{%
+        \fbox{\parbox[c][2.8cm][c]{0.9\linewidth}{\centering 校园图片}}%
+      }\par
+      {\scriptsize\color{HUASMuted}校园建筑视觉素材\par}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+{\setbeamercolor{background canvas}{bg=HUASWarmPaper}
+\begin{frame}[plain,noframenumbering]
+  \HUASclosingpage
+\end{frame}}
 
 \end{document}

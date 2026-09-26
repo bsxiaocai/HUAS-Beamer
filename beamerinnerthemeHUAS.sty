@@ -1,13 +1,63 @@
-% Copyright (C) 2026 [COPYRIGHT_HOLDER]
+% Copyright (C) 2026 bsxiaocai
 % SPDX-License-Identifier: LPPL-1.3c
 % This file is part of HUAS-Beamer and may be distributed and/or modified
 % under the conditions of the LaTeX Project Public License, version 1.3c.
 % LPPL maintenance status: maintained.
-% Current Maintainer: [CURRENT_MAINTAINER]. See LICENSE and NOTICE.md.
+% Current Maintainer: bsxiaocai. See LICENSE and NOTICE.md.
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamerinnerthemeHUAS}[2026/09/26 HUAS Beamer inner theme]
 
 \mode<presentation>
 \setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{title page}{%
+  \vspace*{0.04\paperheight}%
+  \noindent
+  \ifhuas@logo
+    \ifx\huas@logofile\@empty\else
+      \raisebox{-0.12cm}{\huas@insertlogo[0.82cm]}\hspace{0.8em}%
+    \fi
+  \fi
+  \begin{minipage}{0.72\textwidth}
+    {\usebeamerfont{HUAS school name}\color{HUASInk}湖南文理学院\par}
+    {\usebeamerfont{HUAS english name}\color{HUASMuted}Hunan University of Arts and Science\par}
+  \end{minipage}\par
+  \vfill
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+  \ifx\insertsubtitle\@empty\else
+    \vspace{0.6em}%
+    {\usebeamerfont{subtitle}\color{HUASMuted}\insertsubtitle\par}%
+  \fi
+  \vspace{1.2em}%
+  {\color{HUASRed}\rule{0.18\textwidth}{1.5pt}\par}%
+  \vfill
+  {\usebeamerfont{HUAS title meta}\insertauthor\par}
+  {\usebeamerfont{HUAS title meta}\color{HUASMuted}\insertinstitute\quad\insertdate\par}
+  \vspace*{0.03\paperheight}%
+}
+\setbeamertemplate{section page}{%
+  \vspace*{0.07\paperheight}%
+  {\usebeamerfont{HUAS section label}\color{HUASMuted}湖南文理学院\quad HUAS\par}%
+  \vfill
+  {\color{HUASRed}\rule{0.08\textwidth}{1.5pt}\par}%
+  \vspace{1em}%
+  {\usebeamerfont{section title}\color{HUASInk}\insertsection\par}%
+  \vfill
+  {\usebeamerfont{HUAS motto}\color{HUASMuted}博学弘文，明理求真\par}%
+  \vspace*{0.03\paperheight}%
+}
+\setbeamertemplate{HUAS closing page}{%
+  \vspace*{0.07\paperheight}%
+  {\usebeamerfont{HUAS section label}\color{HUASMuted}湖南文理学院\quad Hunan University of Arts and Science\par}%
+  \vfill
+  {\usebeamerfont{HUAS closing title}\color{HUASRed}谢谢聆听\par}%
+  \vspace{0.5em}%
+  {\usebeamerfont{subtitle}\color{HUASMuted}Thank you\par}%
+  \vspace{1em}%
+  {\color{HUASRed}\rule{0.18\textwidth}{1.5pt}\par}%
+  \vfill
+  {\usebeamerfont{HUAS motto}\color{HUASMuted}博学弘文，明理求真\hfill\huas@campuslineart\par}%
+  \vspace*{0.03\paperheight}%
+}
+\newcommand{\HUASclosingpage}{\usebeamertemplate{HUAS closing page}}
 \mode<all>

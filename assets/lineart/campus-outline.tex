@@ -1,0 +1,20 @@
+% Copyright (C) 2026 bsxiaocai
+% SPDX-License-Identifier: LPPL-1.3c
+% This original schematic campus outline is part of HUAS-Beamer.
+% It is not a copy of an official HUAS architectural illustration.
+% LPPL maintenance status: maintained.
+% Current Maintainer: bsxiaocai. See LICENSE and NOTICE.md.
+
+\newcommand{\huas@campuslineart}{%
+  \begin{tikzpicture}[x=0.13cm,y=0.13cm,draw=HUASTerracotta!65,line width=0.45pt]
+    \draw (0,0)--(34,0);
+    \draw (2,0)--(2,7)--(32,7)--(32,0);
+    \draw (4,7)--(4,9)--(30,9)--(30,7);
+    \draw (10,9)--(10,13)--(24,13)--(24,9);
+    \draw (9,13)--(17,16)--(25,13);
+    \draw (14,0)--(14,5)--(20,5)--(20,0);
+    \draw (17,0)--(17,5);
+    \foreach \x in {5,9,23,27}{\draw (\x,2) rectangle ++(2,3);}
+    \foreach \x in {12,16,20}{\draw (\x,10) rectangle ++(2,2);}
+  \end{tikzpicture}%
+}
