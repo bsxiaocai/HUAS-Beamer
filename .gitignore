@@ -1,0 +1,19 @@
+# XeLaTeX and latexmk output
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+main.pdf
+.tmp/
+
+# Local research material and third-party source checkouts.
+# Their publication rights and reuse terms need separate review.
+HUAS-Beamer-Research/
+examples/references/
