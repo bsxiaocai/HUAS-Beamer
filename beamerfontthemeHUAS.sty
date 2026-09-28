@@ -9,6 +9,8 @@
 \ProvidesPackage{beamerfontthemeHUAS}[2026/09/26 HUAS Beamer font hierarchy]
 
 \mode<presentation>
+% 自主调字号优先在导言区 \setbeamerfont{角色}{size=...}，见 docs/customization.md。
+% AutoFakeBold=2 只控制 SimHei 的模拟加粗程度，增大后标题笔画更厚。
 % Body uses the ctex Song family; headings use its Hei family on each platform.
 % SimHei has no native bold face, so only that family uses a modest fake bold.
 \IfFontExistsTF{SimHei}{%

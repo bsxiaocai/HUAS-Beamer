@@ -12,7 +12,8 @@
 \setbeamertemplate{section in toc}[sections numbered]
 \newenvironment{HUASquotation}[1]{%
   \def\huas@quotesource{#1}%
-  \begin{beamercolorbox}[wd=\linewidth,sep=0.8em]{HUAS quotation}
+  % 跟随当前栏宽，故双栏中不会使用整页宽度。
+  \begin{beamercolorbox}[wd=\linewidth,sep=\huas@layout{quotation padding}]{HUAS quotation}
     \usebeamerfont{quotation}%
 }{%
     \par\medskip
@@ -22,7 +23,7 @@
 }
 \newcommand{\HUASkeypoint}[2]{%
   \begin{frame}{#1}
-    \begin{beamercolorbox}[wd=\textwidth,sep=1em]{HUAS quotation}
+    \begin{beamercolorbox}[wd=\textwidth,sep=\huas@layout{keypoint padding}]{HUAS quotation}
       \usebeamerfont{HUAS key point}#2\par
     \end{beamercolorbox}
   \end{frame}%

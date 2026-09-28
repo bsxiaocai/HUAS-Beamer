@@ -3,10 +3,15 @@
 % SPDX-License-Identifier: LPPL-1.3c
 % Example under LPPL 1.3c. See LICENSE and NOTICE.md.
 % Compile from the repository root.
+% 逐页操作说明：docs/templates/academic.md；全部尺寸：docs/customization.md。
 \documentclass[aspectratio=169]{ctexbeamer}
 \usetheme{HUAS}
 \HUASsetup{style=academic,logo=true,sectionpage=true,faculty={学术交流}}
 \input{examples/local-assets.tex}
+% 微调放在导言区；先取消下面注释，再只改需要的参数。
+% \HUASsetlayout{frametitle padding=2mm,hero rule width=3cm}
+% \setbeamerfont{frametitle}{size=\Large} % 正文标题字号；加大后减少正文可用高度。
+% 主标题、副标题、作者、机构、日期分别在以下五行替换。
 \title{从阅读问题到研究证据}
 \subtitle{学术汇报示例}
 \author{汇报者}
@@ -15,6 +20,7 @@
 \begin{document}
 \HUASmaketitle
 \begin{frame}{汇报结构}
+  % 修改 section 后编译两遍；删 hideallsubsections 可显示已定义的小节。
   \tableofcontents[hideallsubsections]
 \end{frame}
 \section{问题与方法}
@@ -36,6 +42,7 @@
   \end{enumerate}
   \medskip
   用比例说明证据覆盖范围：
+  % 显示公式使用原生数学环境；supported/total 是直立文字下标。
   \[
     r=\frac{n_{\mathrm{supported}}}{n_{\mathrm{total}}}
   \]
@@ -45,6 +52,7 @@
 \begin{frame}{分析框架：让判断与材料对应}
   \begin{table}
     \caption{观察维度与材料位置}
+    % 1.5 为行高倍数；lll 表示三列左对齐，长文字可改 p{4cm} 固定列宽。
     \renewcommand{\arraystretch}{1.5}
     \begin{tabular}{lll}
       \hline
@@ -60,9 +68,11 @@
     分析框架与研究发现应分别呈现；未验证的判断不要写成结论。
   \end{alertblock}
 \end{frame}
+% 此命令自己生成一页，必须在 frame 外；第二参数中的 \\ 强制换行。
 \HUASkeypoint{讨论与结论}{结论回到证据，\\解释保留边界。}
 \begin{frame}{参考资料}
   \begin{thebibliography}{9}
+    % 每条 bibitem 的键应唯一；正文可用 \cite{guide}，添加引用后编译两遍。
     \bibitem{guide}Till Tantau, Joseph Wright, Vedran Miletić.
       \newblock The beamer class: User Guide.
       \newblock TeX Live 随附文档。

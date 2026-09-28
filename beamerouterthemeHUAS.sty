@@ -9,9 +9,12 @@
 \ProvidesPackage{beamerouterthemeHUAS}[2026/09/26 HUAS Beamer outer theme]
 
 \mode<presentation>
+% headline 仅用于 Cool 普通内容页；完整封面/章节/结束页使用 plain。
+% ht 是基线上方高度，dp 是基线下方深度；左右文字缩进沿用正文边距。
 \setbeamertemplate{headline}{%
   \ifhuas@cool
-    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.2ex,
+    \begin{beamercolorbox}[wd=\huas@layout{headline width},
+      ht=\huas@layout{headline height},dp=\huas@layout{headline depth},
       leftskip=\beamer@leftmargin,rightskip=\beamer@rightmargin]{HUAS context}
       \usebeamerfont{footline}\insertsectionhead\hfill\huas@schoolname
     \end{beamercolorbox}%
@@ -19,27 +22,29 @@
 }
 \setbeamertemplate{frametitle}{%
   \nointerlineskip
-  \begin{beamercolorbox}[wd=\paperwidth,leftskip=\beamer@leftmargin,
-    rightskip=\beamer@rightmargin,sep=0.15cm]{frametitle}
+  % 高度由标题行数、字体 strut 和 padding 决定，不是固定 ht。
+  \begin{beamercolorbox}[wd=\huas@layout{frametitle width},leftskip=\beamer@leftmargin,
+    rightskip=\beamer@rightmargin,sep=\huas@layout{frametitle padding}]{frametitle}
     \usebeamerfont{frametitle}\strut\insertframetitle\strut
   \end{beamercolorbox}%
   \ifhuas@cool\else
     \nointerlineskip
-    \hbox to\textwidth{\color{HUASLine}\leaders\hrule height0.4pt\hfill}%
+    \hbox to\textwidth{\color{HUASLine}\leaders\hrule height\huas@layout{frametitle rule}\hfill}%
   \fi
 }
 
 \setbeamertemplate{footline}{%
   \ifhuas@footer
     \leavevmode
-    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.2ex,
+    \begin{beamercolorbox}[wd=\huas@layout{footline width},
+      ht=\huas@layout{footline height},dp=\huas@layout{footline depth},
       leftskip=\beamer@leftmargin,rightskip=\beamer@rightmargin]{footline}
       \usebeamerfont{footline}%
       \ifhuas@minimalfooter\else\huas@footerlabel\fi\hfill
       \insertframenumber/\inserttotalframenumber
       \ifhuas@minimalfooter\else\ifhuas@logo
         \ifx\huas@logofile\@empty\else
-          \hspace{0.5em}\huas@insertlogo
+          \hspace{0.5em}\huas@insertlogo[\huas@layout{logo footer height}]
         \fi
       \fi\fi
     \end{beamercolorbox}%

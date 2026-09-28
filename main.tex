@@ -3,13 +3,20 @@
 % SPDX-License-Identifier: LPPL-1.3c
 % This HUAS-Beamer example may be distributed and/or modified under
 % the conditions of LPPL 1.3c. See LICENSE and NOTICE.md.
+% 逐页操作说明：docs/templates/main.md；全部尺寸：docs/customization.md。
+% aspectratio=169 是 16cm×9cm；可加 12pt 改全局字号，再检查长标题。
 \documentclass[aspectratio=169]{ctexbeamer}
 
 \usetheme{HUAS}
 \HUASsetup{style=academic,logo=true,footer=standard,sectionpage=true,
   language=zh,faculty={湖南文理学院}}
 \input{examples/local-assets.tex}
+% 在素材加载后用 HUASsetlogo/HUASsetbuilding 覆盖图片路径。
+% 取消注释即可微调：左右边距控制正文宽，padding 是标题栏内边距。
+% \HUASsetlayout{text margin left=12mm,text margin right=12mm,
+%   frametitle padding=2mm,logo title height=9mm}
 
+% 以下五项分别控制封面主标题、副标题、作者、机构与日期。
 \title{HUAS-Beamer 视觉页面示例}
 \subtitle{人文表达与理性结构}
 \author{HUAS-Beamer 项目}
@@ -20,6 +27,7 @@
 
 \HUASmaketitle
 
+% sectionpage=true 时这一行自动生成章节页，不要再手动重复插入。
 \section{研究背景与目标}
 
 \begin{frame}{研究背景}
@@ -32,6 +40,7 @@
 \end{frame}
 
 \begin{frame}{校园视觉与学术内容}
+  % T=顶部对齐；左右为 0.52/0.43 正文宽，默认约 7.28/6.02cm。
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.52\textwidth}
       \textbf{视觉素材的作用}
@@ -43,8 +52,10 @@
     \end{column}
     \begin{column}{0.43\textwidth}
       \IfFileExists{assets/research/HUAS_building_2_bgcolor.png}{%
+        % linewidth 是当前右栏宽，改为 0.9\linewidth 可缩小图片；不补绘线条。
         \includegraphics[width=\linewidth]{assets/research/HUAS_building_2_bgcolor.png}%
       }{%
+        % 缺图占位框高 2.8cm、内部宽为栏宽的 90%，并非真实图片尺寸。
         \fbox{\parbox[c][2.8cm][c]{0.9\linewidth}{\centering 校园图片}}%
       }\par
       {\scriptsize\color{HUASMuted}校园建筑视觉素材\par}

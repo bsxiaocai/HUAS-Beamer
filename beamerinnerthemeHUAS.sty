@@ -11,11 +11,12 @@
 \mode<presentation>
 \setbeamertemplate{itemize items}[circle]
 \newcommand{\huas@herofooter}[1]{%
-  \begin{beamercolorbox}[wd=\textwidth,sep=0.15cm]{HUAS hero footer}
-    \begin{minipage}[b]{0.47\linewidth}
+  % 总宽度为正文宽；两栏均在框内按局部 linewidth 求值，hfill 分配剩余间距。
+  \begin{beamercolorbox}[wd=\textwidth,sep=\huas@layout{hero padding}]{HUAS hero footer}
+    \begin{minipage}[b]{\huas@layout{hero column width}}
       \usebeamercolor[fg]{HUAS hero footer}#1
     \end{minipage}\hfill
-    \begin{minipage}[b]{0.47\linewidth}
+    \begin{minipage}[b]{\huas@layout{hero column width}}
       \raggedleft\huas@insertbuilding
     \end{minipage}
   \end{beamercolorbox}%
@@ -24,49 +25,52 @@
   \ifhuas@cool
     \usebeamertemplate{HUAS cool title page}%
   \else
-  \vspace*{0.04\paperheight}%
+  % vfill 是弹性留白：实际标题位置还受标题换行和辅助区高度影响。
+  \vspace*{\huas@layout{title top}}%
   \noindent
   \ifhuas@logo
     \ifhuas@warm\else
     \ifx\huas@logofile\@empty\else
-      \raisebox{-0.12cm}{\huas@insertlogo[0.82cm]}\hspace{0.8em}%
+      % -0.12cm 为校徽与校名的基线校正；0.8em 为二者水平间距。
+      \raisebox{-0.12cm}{\huas@insertlogo[\huas@layout{logo title height}]}\hspace{0.8em}%
     \fi
     \fi
   \fi
-  \begin{minipage}{0.72\textwidth}
+  \begin{minipage}{\huas@layout{identity width}}
     {\usebeamerfont{HUAS school name}\usebeamercolor[fg]{HUAS hero}\huas@schoolname\par}
     {\usebeamerfont{HUAS english name}\usebeamercolor[fg]{HUAS hero muted}\huas@schoolsecondary\par}
   \end{minipage}\par
   \vfill
   {\usebeamerfont{title}\usebeamercolor[fg]{HUAS hero title}\inserttitle\par}
   \ifx\insertsubtitle\@empty\else
-    \vspace{0.6em}%
+    \vspace{\huas@layout{subtitle gap}}%
     {\usebeamerfont{subtitle}\usebeamercolor[fg]{HUAS hero muted}\insertsubtitle\par}%
   \fi
-  \vspace{1.2em}%
-  {\usebeamercolor[fg]{HUAS hero rule}\rule{0.18\textwidth}{1.5pt}\par}%
+  \vspace{\huas@layout{title rule gap}}%
+  {\usebeamercolor[fg]{HUAS hero rule}\rule{\huas@layout{hero rule width}}{\huas@layout{hero rule thickness}}\par}%
   \vfill
   \huas@herofooter{\usebeamerfont{HUAS title meta}%
     % The red transparent badge stays legible on Warm's light metadata panel.
     \ifhuas@warm\ifhuas@logo
       \ifx\huas@logofile\@empty\else
-        \raisebox{-0.15cm}{\huas@insertlogo[0.62cm]}\hspace{0.4em}%
+        % Warm 信息区校徽的基线下移 0.15cm，作者前间距为 0.4em。
+        \raisebox{-0.15cm}{\huas@insertlogo[\huas@layout{logo panel height}]}\hspace{0.4em}%
       \fi
     \fi\fi
     \insertauthor\par
     \insertinstitute\par\insertdate\par}%
-  \vspace*{0.03\paperheight}%
+  \vspace*{\huas@layout{hero bottom}}%
   \fi
 }
 \setbeamertemplate{HUAS cool title page}{%
-  \vspace*{0.04\paperheight}%
+  \vspace*{\huas@layout{title top}}%
   {\usebeamerfont{HUAS school name}\usebeamercolor[fg]{HUAS hero}\huas@schoolname\par}%
   {\usebeamerfont{HUAS english name}\usebeamercolor[fg]{HUAS hero muted}\huas@schoolsecondary\par}%
   \vfill
-  \begin{beamercolorbox}[wd=\textwidth,sep=0.6em,center]{frametitle}
+  \begin{beamercolorbox}[wd=\textwidth,sep=\huas@layout{cool title padding},center]{frametitle}
     {\usebeamerfont{title}\inserttitle\par}%
     \ifx\insertsubtitle\@empty\else
-      \vspace{0.4em}{\usebeamerfont{subtitle}\insertsubtitle\par}%
+      \vspace{\huas@layout{cool subtitle gap}}{\usebeamerfont{subtitle}\insertsubtitle\par}%
     \fi
   \end{beamercolorbox}%
   \vfill
@@ -74,37 +78,37 @@
     \insertinstitute\par\insertdate\par}%
   \vfill
   \huas@herofooter{\usebeamerfont{HUAS motto}\huas@motto\par
-    \ifhuas@logo\huas@insertlogo[0.62cm]\fi}%
-  \vspace*{0.03\paperheight}%
+    \ifhuas@logo\huas@insertlogo[\huas@layout{logo panel height}]\fi}%
+  \vspace*{\huas@layout{hero bottom}}%
 }
 \setbeamertemplate{section page}{%
-  \vspace*{0.07\paperheight}%
+  \vspace*{\huas@layout{divider top}}%
   {\usebeamerfont{HUAS section label}\usebeamercolor[fg]{HUAS hero muted}\huas@schoolname\par}%
   \vfill
-  {\usebeamercolor[fg]{HUAS hero rule}\rule{0.08\textwidth}{1.5pt}\par}%
-  \vspace{1em}%
+  {\usebeamercolor[fg]{HUAS hero rule}\rule{\huas@layout{section rule width}}{\huas@layout{hero rule thickness}}\par}%
+  \vspace{\huas@layout{section rule gap}}%
   {\usebeamerfont{section title}\usebeamercolor[fg]{HUAS hero}\insertsection\par}%
   \vfill
   \huas@herofooter{\usebeamerfont{HUAS motto}\huas@motto\par
     \ifx\huas@faculty\@empty\else\huas@faculty\par\fi}%
-  \vspace*{0.03\paperheight}%
+  \vspace*{\huas@layout{hero bottom}}%
 }
 \setbeamertemplate{HUAS closing page}{%
-  \vspace*{0.07\paperheight}%
+  \vspace*{\huas@layout{divider top}}%
   {\usebeamerfont{HUAS section label}\usebeamercolor[fg]{HUAS hero muted}\huas@schoolname\par}%
   \vfill
   {\usebeamerfont{HUAS closing title}\usebeamercolor[fg]{HUAS hero title}%
     \ifhuas@english Thank you\else 谢谢聆听\fi\par}%
-  \vspace{0.5em}%
+  \vspace{\huas@layout{closing subtitle gap}}%
   \ifhuas@english\else
     {\usebeamerfont{subtitle}\usebeamercolor[fg]{HUAS hero muted}Thank you\par}%
   \fi
-  \vspace{1em}%
-  {\usebeamercolor[fg]{HUAS hero rule}\rule{0.18\textwidth}{1.5pt}\par}%
+  \vspace{\huas@layout{closing rule gap}}%
+  {\usebeamercolor[fg]{HUAS hero rule}\rule{\huas@layout{hero rule width}}{\huas@layout{hero rule thickness}}\par}%
   \vfill
   \huas@herofooter{\usebeamerfont{HUAS motto}\huas@motto\par
     \ifx\huas@faculty\@empty\else\huas@faculty\par\fi}%
-  \vspace*{0.03\paperheight}%
+  \vspace*{\huas@layout{hero bottom}}%
 }
 \newcommand{\HUASclosingpage}{\usebeamertemplate{HUAS closing page}}
 % Scope hero colors to a complete frame, restoring the content canvas afterwards.

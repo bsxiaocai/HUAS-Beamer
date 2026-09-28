@@ -13,9 +13,10 @@
     \PackageWarning{beamerthemeHUAS}{Logo image not found: #1}%
   }%
 }
-\newcommand{\huas@insertlogo}[1][0.34cm]{%
+\newcommand{\huas@insertlogo}[1][\huas@layout{logo footer height}]{%
   \ifx\huas@logofile\@empty\else
-    \includegraphics[width=0.15\textwidth,height=#1,keepaspectratio]{\huas@logofile}%
+    % 宽高都是上限；keepaspectratio 保证不会拉伸校徽。
+    \includegraphics[width=\huas@layout{logo max width},height=#1,keepaspectratio]{\huas@logofile}%
   \fi
 }
 
@@ -35,6 +36,6 @@
   \ifx\huas@buildingfile\@empty
     % No artwork is invented when an asset is absent.
   \else
-    \includegraphics[width=\linewidth,height=0.20\paperheight,keepaspectratio]{\huas@buildingfile}%
+    \includegraphics[width=\linewidth,height=\huas@layout{building max height},keepaspectratio]{\huas@buildingfile}%
   \fi
 }

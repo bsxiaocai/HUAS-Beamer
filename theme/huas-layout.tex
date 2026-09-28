@@ -1,0 +1,46 @@
+% Copyright (C) 2026 bsxiaocai
+% SPDX-License-Identifier: LPPL-1.3c
+% LPPL maintenance status: maintained.
+% Current Maintainer: bsxiaocai. See LICENSE and NOTICE.md.
+
+% 尺寸只在导言区设置。长度在实际使用处求值，保留 em/ex 与局部字体的关系。
+% 完整参数说明和修改示例：docs/customization.md。
+\pgfkeys{/huas/layout/.is family, /huas/layout/.cd,
+  text margin left/.code=\setbeamersize{text margin left=#1}, % 正文左边距
+  text margin right/.code=\setbeamersize{text margin right=#1}, % 正文右边距
+  headline width/.initial=\paperwidth, % Cool 顶部章节提示栏宽度
+  headline height/.initial=2.5ex, % 页眉基线上方高度；总高度为 height+depth
+  headline depth/.initial=1.2ex, % 页眉基线下方深度
+  frametitle width/.initial=\paperwidth, % 正文标题栏宽度
+  frametitle padding/.initial=0.15cm, % 标题栏四周内边距；不是总高度
+  frametitle rule/.initial=0.4pt, % Academic/Warm 正文标题下细线厚度
+  footline width/.initial=\paperwidth, % 页脚色块宽度
+  footline height/.initial=2.5ex, % 页脚基线上方高度
+  footline depth/.initial=1.2ex, % 页脚基线下方深度
+  logo max width/.initial=0.15\textwidth, % 所有校徽的宽度上限，保留纵横比
+  logo title height/.initial=0.82cm, % Academic 标题页校徽高度上限
+  logo panel height/.initial=0.62cm, % Warm/Cool 标题页浅色区校徽高度上限
+  logo footer height/.initial=0.34cm, % 标准页脚校徽高度上限
+  building max height/.initial=0.20\paperheight, % 辅助建筑图高度上限
+  hero padding/.initial=0.15cm, % 封面/章节/结束页底部辅助区内边距
+  hero column width/.initial=0.47\linewidth, % 辅助区左右两栏各自宽度，须不超过一半
+  identity width/.initial=0.72\textwidth, % Academic/Warm 封面校名文字区宽度
+  title top/.initial=0.04\paperheight, % 封面顶部附加留白
+  divider top/.initial=0.07\paperheight, % 章节/结束页顶部附加留白
+  hero bottom/.initial=0.03\paperheight, % 完整页面底部附加留白
+  subtitle gap/.initial=0.6em, % Academic/Warm 标题与副标题间距
+  title rule gap/.initial=1.2em, % 副标题与封面短线间距
+  hero rule width/.initial=0.18\textwidth, % 封面/结束页短线长度
+  hero rule thickness/.initial=1.5pt, % 所有完整页面短线厚度
+  section rule width/.initial=0.08\textwidth, % 章节页短线长度
+  section rule gap/.initial=1em, % 章节页短线与章节标题间距
+  closing subtitle gap/.initial=0.5em, % 中文致谢与英文 Thank you 间距
+  closing rule gap/.initial=1em, % 致谢文字与短线间距
+  cool title padding/.initial=0.6em, % Cool 封面居中蓝色标题块内边距
+  cool subtitle gap/.initial=0.4em, % Cool 封面标题与副标题间距
+  quotation padding/.initial=0.8em, % 带出处引文框内边距
+  keypoint padding/.initial=1em % 重点页文字框内边距
+}
+\newcommand{\huas@layout}[1]{\pgfkeysvalueof{/huas/layout/#1}}
+\newcommand{\HUASsetlayout}[1]{\pgfkeys{/huas/layout/.cd,#1}}
+\@onlypreamble\HUASsetlayout

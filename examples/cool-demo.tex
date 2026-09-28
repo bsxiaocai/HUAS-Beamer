@@ -3,11 +3,17 @@
 % SPDX-License-Identifier: LPPL-1.3c
 % Example distributed under LPPL 1.3c. See LICENSE and NOTICE.md.
 % Compile from the project root: xelatex -output-directory=build examples/cool-demo.tex
+% 逐页操作说明：docs/templates/cool.md；全部尺寸：docs/customization.md。
 \documentclass[aspectratio=169]{ctexbeamer}
 \usetheme{HUAS}
 \HUASsetup{style=cool,logo=true,footer=standard,sectionpage=true,
   faculty={教学与学术交流}}
 \input{examples/local-assets.tex}
+% Cool 页眉和页脚的总高度 = height + depth；下面均为可取消注释的示例。
+% \HUASsetlayout{headline width=\paperwidth,headline height=3mm,
+%   headline depth=1.3mm,footline height=3.5mm,footline depth=1.3mm,
+%   cool title padding=0.8em,frametitle padding=2mm}
+% 封面主标题/副标题/作者/机构/日期分别在以下五行替换。
 \title{阅读、证据与教学设计}
 \subtitle{HUAS-Beamer 冷色样式与学术内容组件}
 \author{HUAS-Beamer 项目}
@@ -47,6 +53,7 @@
 \end{frame}
 \section{文本与教学}
 \begin{frame}{文本细读：原文与分析并列}
+  % 左右各 48% 正文宽，默认各 6.72cm；引文框随左栏 linewidth 缩放。
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.48\textwidth}
       \begin{HUASquotation}{陆游《游山西村》}
@@ -78,6 +85,7 @@
 \begin{frame}{表格：把任务和证据对应起来}
   \begin{table}
     \caption{教学活动与可观察证据}
+    % 1.4 是表格行高倍数；lll 为三列左对齐，改列宽时检查总宽度。
     \renewcommand{\arraystretch}{1.4}
     \begin{tabular}{lll}
       \hline
@@ -96,9 +104,11 @@
 \begin{frame}{图片：交代对象与来源}
   \begin{figure}
     \IfFileExists{assets/research/HUAS_building_2_bgcolor.png}{%
+      % 正文图宽是正文宽的 65%（默认 9.1cm），不受建筑装饰区高度参数影响。
       \includegraphics[width=0.65\textwidth]{assets/research/HUAS_building_2_bgcolor.png}%
       \caption{校园建筑线稿}%
     }{%
+      % 缺图占位框高 2.2cm、内部宽为正文宽的 60%；caption 在两分支各自设置。
       \fbox{\parbox[c][2.2cm][c]{0.6\textwidth}{\centering 校园图片}}%
       \caption{图片位置示例}%
     }
@@ -111,6 +121,7 @@
   图注说明对象，来源说明帮助读者追溯素材。
 \end{frame}
 \begin{frame}[fragile]{代码：用短片段说明处理过程}
+  % verbatim 必须保留 fragile；small 仅缩小当前 block 内的代码字号。
   \begin{block}{Python 示例：统计已经完成的阅读任务}
     \small
     \begin{verbatim}
@@ -124,9 +135,11 @@ print(progress, "/", len(tasks))
   代码页使用原生 verbatim；中文解释放在代码区外。
 \end{frame}
 \section{总结与资料}
+% keypoint 自己生成普通内容页并计入页码，第二参数支持手动换行。
 \HUASkeypoint{关键结论}{让问题引导阅读，\\让证据支持判断。}
 \begin{frame}{参考文献与进一步阅读}
   \begin{thebibliography}{9}
+    % 手工条目；{9} 是编号宽度样本，超过 9 条改成 {99}。
     \bibitem{classic}《论语·为政》.
       \newblock 本示例引文的出处。
     \bibitem{beamer}Till Tantau, Joseph Wright, Vedran Miletić.

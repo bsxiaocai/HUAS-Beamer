@@ -9,6 +9,8 @@
 
 根目录执行 `./scripts/build.ps1` 编译全部示例，或按 README 的命令手动编译。源码可独立选择，仍需根目录五个主题文件、theme 目录和此可选素材加载文件；不依赖第三方参考仓库。
 
+逐页修改说明：[main](../docs/templates/main.md)、[academic](../docs/templates/academic.md)、[seminar](../docs/templates/seminar.md)、[cool](../docs/templates/cool.md)。[共享微调手册](../docs/customization.md) 说明每个尺寸、字体和颜色的位置及作用；四份源码的导言区带可取消注释的调参示例。
+
 ## 参考项目源码
 
 开发总纲中提到的项目均已浅克隆到 `examples/references/`。这些仓库仅供本地研究，不纳入 HUAS-Beamer 的 Git 提交；HUAS-Beamer 没有直接复制其代码。

@@ -1,6 +1,6 @@
 # HUAS-Beamer
 
-湖南文理学院主题的 LaTeX Beamer 项目。目前完成 Phase 5 的示例与构建流程，并提供 Academic Light、HUAS Warm 和蓝色 Cool 三套样式。
+湖南文理学院主题的 LaTeX Beamer 项目。目前完成 Phase 6 的自主微调参数与逐模板操作说明，并提供 Academic Light、HUAS Warm 和蓝色 Cool 三套样式。
 
 ## 编译
 
@@ -24,6 +24,21 @@ PowerShell 可运行 `./scripts/build.ps1`，连续编译全部四份示例两�
 | `examples/academic-demo.tex` | Academic 学术汇报、方法、公式与表格 | `build/academic/academic-demo.pdf` |
 | `examples/seminar-demo.tex` | Warm 读书分享、文本细读与研讨 | `build/seminar/seminar-demo.pdf` |
 | `examples/cool-demo.tex` | Cool 完整内容组件 | `build/cool/cool-demo.pdf` |
+
+## 自主微调与逐模板说明
+
+[完整微调手册](docs/customization.md) 列出页眉／标题栏／页脚的宽高与内边距、封面留白、辅助区栏宽、图片尺寸、字体、颜色及内容组件的修改方法。四份示例分别有逐页说明：[最小视觉模板](docs/templates/main.md)、[Academic 学术模板](docs/templates/academic.md)、[Warm 研讨模板](docs/templates/seminar.md)、[Cool 蓝色模板](docs/templates/cool.md)。源码对应位置有中文注释与可取消注释的修改示例。
+
+常用尺寸在导言区加载主题后通过 `\HUASsetlayout` 调整，无需修改主题源码：
+
+```tex
+\HUASsetlayout{headline width=\paperwidth,
+  headline height=3mm,headline depth=1.3mm,
+  frametitle padding=2mm,
+  footline height=3.5mm,footline depth=1.3mm}
+```
+
+此例将 Cool 页眉总高度改成 4.3mm、普通页脚总高度改成 4.8mm、标题栏四周内边距改成 2mm；Academic/Warm 不显示章节页眉。标题栏总高度随文字行数及字号变化。默认 16:9 的纸张为 16×9cm，左右边距各 1cm；完整参数表与所有默认值在手册和 `theme/huas-layout.tex` 中。
 
 ## 中文字体
 

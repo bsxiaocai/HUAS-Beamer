@@ -3,11 +3,16 @@
 % SPDX-License-Identifier: LPPL-1.3c
 % Example under LPPL 1.3c. See LICENSE and NOTICE.md.
 % Compile from the repository root.
+% 逐页操作说明：docs/templates/seminar.md；全部尺寸：docs/customization.md。
 \documentclass[aspectratio=169]{ctexbeamer}
 \usetheme{HUAS}
 \HUASsetup{style=warm,logo=true,footer=minimal,sectionpage=true,
   faculty={读书分享与研讨}}
 \input{examples/local-assets.tex}
+% Warm 只改变完整页面；minimal 页脚只显示正文页码。
+% \HUASsetlayout{subtitle gap=0.8em,section rule width=2cm,
+%   quotation padding=1em,logo panel height=7mm}
+% 以下五项修改封面信息；设置固定日期可用 \date{2026年9月}。
 \title{在文本中寻找解释的依据}
 \subtitle{读书分享与研讨示例}
 \author{分享者}
@@ -21,6 +26,7 @@
 \section{阅读与细读}
 \begin{frame}{先读原文，再提出问题}
   \begin{HUASquotation}{陆游《游山西村》}
+    % 花括号为右下出处，环境内部为宋体引文；内边距用 quotation padding。
     山重水复疑无路，柳暗花明又一村。
   \end{HUASquotation}
   \medskip
@@ -31,6 +37,7 @@
   \end{itemize}
 \end{frame}
 \begin{frame}{文本细读：记录与解释并列}
+  % 左右各 47% 正文宽，默认各 6.58cm；剩余约 0.84cm 分配为栏间空白。
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.47\textwidth}
       \begin{block}{可直接观察的语词}
@@ -60,6 +67,7 @@
     不同理解可以并存，但都需要说明依据。
   \end{alertblock}
 \end{frame}
+% 第一参数是页标题，第二参数是黑体重点句；不是深色封面页。
 \HUASkeypoint{阅读后的反思}{保留自己的问题，\\也听见其他的解释。}
 \HUASclosingframe
 \end{document}
