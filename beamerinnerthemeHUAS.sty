@@ -10,6 +10,16 @@
 
 \mode<presentation>
 \setbeamertemplate{itemize items}[circle]
+\newcommand{\huas@herofooter}[1]{%
+  \begin{beamercolorbox}[wd=\textwidth,sep=0.15cm]{HUAS hero footer}
+    \begin{minipage}[b]{0.47\linewidth}
+      \usebeamercolor[fg]{HUAS hero footer}#1
+    \end{minipage}\hfill
+    \begin{minipage}[b]{0.47\linewidth}
+      \raggedleft\huas@insertbuilding
+    \end{minipage}
+  \end{beamercolorbox}%
+}
 \setbeamertemplate{title page}{%
   \vspace*{0.04\paperheight}%
   \noindent
@@ -19,45 +29,68 @@
     \fi
   \fi
   \begin{minipage}{0.72\textwidth}
-    {\usebeamerfont{HUAS school name}\color{HUASInk}湖南文理学院\par}
-    {\usebeamerfont{HUAS english name}\color{HUASMuted}Hunan University of Arts and Science\par}
+    {\usebeamerfont{HUAS school name}\usebeamercolor[fg]{HUAS hero}\huas@schoolname\par}
+    {\usebeamerfont{HUAS english name}\usebeamercolor[fg]{HUAS hero muted}\huas@schoolsecondary\par}
   \end{minipage}\par
   \vfill
-  {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+  {\usebeamerfont{title}\usebeamercolor[fg]{HUAS hero title}\inserttitle\par}
   \ifx\insertsubtitle\@empty\else
     \vspace{0.6em}%
-    {\usebeamerfont{subtitle}\color{HUASMuted}\insertsubtitle\par}%
+    {\usebeamerfont{subtitle}\usebeamercolor[fg]{HUAS hero muted}\insertsubtitle\par}%
   \fi
   \vspace{1.2em}%
-  {\color{HUASRed}\rule{0.18\textwidth}{1.5pt}\par}%
+  {\usebeamercolor[fg]{HUAS hero rule}\rule{0.18\textwidth}{1.5pt}\par}%
   \vfill
-  {\usebeamerfont{HUAS title meta}\insertauthor\par}
-  {\usebeamerfont{HUAS title meta}\color{HUASMuted}\insertinstitute\quad\insertdate\par}
+  \huas@herofooter{\usebeamerfont{HUAS title meta}\insertauthor\par
+    \insertinstitute\par\insertdate\par}%
   \vspace*{0.03\paperheight}%
 }
 \setbeamertemplate{section page}{%
   \vspace*{0.07\paperheight}%
-  {\usebeamerfont{HUAS section label}\color{HUASMuted}湖南文理学院\quad HUAS\par}%
+  {\usebeamerfont{HUAS section label}\usebeamercolor[fg]{HUAS hero muted}\huas@schoolname\par}%
   \vfill
-  {\color{HUASRed}\rule{0.08\textwidth}{1.5pt}\par}%
+  {\usebeamercolor[fg]{HUAS hero rule}\rule{0.08\textwidth}{1.5pt}\par}%
   \vspace{1em}%
-  {\usebeamerfont{section title}\color{HUASInk}\insertsection\par}%
+  {\usebeamerfont{section title}\usebeamercolor[fg]{HUAS hero}\insertsection\par}%
   \vfill
-  {\usebeamerfont{HUAS motto}\color{HUASMuted}博学弘文，明理求真\par}%
+  \huas@herofooter{\usebeamerfont{HUAS motto}\huas@motto\par
+    \ifx\huas@faculty\@empty\else\huas@faculty\par\fi}%
   \vspace*{0.03\paperheight}%
 }
 \setbeamertemplate{HUAS closing page}{%
   \vspace*{0.07\paperheight}%
-  {\usebeamerfont{HUAS section label}\color{HUASMuted}湖南文理学院\quad Hunan University of Arts and Science\par}%
+  {\usebeamerfont{HUAS section label}\usebeamercolor[fg]{HUAS hero muted}\huas@schoolname\par}%
   \vfill
-  {\usebeamerfont{HUAS closing title}\color{HUASRed}谢谢聆听\par}%
+  {\usebeamerfont{HUAS closing title}\usebeamercolor[fg]{HUAS hero title}%
+    \ifhuas@english Thank you\else 谢谢聆听\fi\par}%
   \vspace{0.5em}%
-  {\usebeamerfont{subtitle}\color{HUASMuted}Thank you\par}%
+  \ifhuas@english\else
+    {\usebeamerfont{subtitle}\usebeamercolor[fg]{HUAS hero muted}Thank you\par}%
+  \fi
   \vspace{1em}%
-  {\color{HUASRed}\rule{0.18\textwidth}{1.5pt}\par}%
+  {\usebeamercolor[fg]{HUAS hero rule}\rule{0.18\textwidth}{1.5pt}\par}%
   \vfill
-  {\usebeamerfont{HUAS motto}\color{HUASMuted}博学弘文，明理求真\hfill\huas@campuslineart\par}%
+  \huas@herofooter{\usebeamerfont{HUAS motto}\huas@motto\par
+    \ifx\huas@faculty\@empty\else\huas@faculty\par\fi}%
   \vspace*{0.03\paperheight}%
 }
 \newcommand{\HUASclosingpage}{\usebeamertemplate{HUAS closing page}}
+% Scope hero colors to a complete frame, restoring the content canvas afterwards.
+\newcommand{\huas@heroframe}[2]{%
+  \begingroup
+  \ifhuas@warm\huas@warmcolors\else\huas@academiccolors\fi
+  \setbeamercolor{background canvas}{use=#1,bg=#1.bg}%
+  \begin{frame}[plain,noframenumbering]
+    #2
+  \end{frame}
+  \endgroup
+}
+\newcommand{\HUASmaketitle}{\huas@heroframe{HUAS title canvas}{\titlepage}}
+\newcommand{\HUASsectionframe}{\huas@heroframe{HUAS divider canvas}{\sectionpage}}
+\newcommand{\HUASclosingframe}{\huas@heroframe{HUAS divider canvas}{\HUASclosingpage}}
+\AtBeginSection[]{%
+  \ifhuas@sectionpage
+    \ifbeamer@inframe\else\HUASsectionframe\fi
+  \fi
+}
 \mode<all>

@@ -19,21 +19,20 @@
   \hbox to\textwidth{\color{HUASLine}\leaders\hrule height0.4pt\hfill}%
 }
 
-\ifhuas@footer
-  \setbeamertemplate{footline}{%
+\setbeamertemplate{footline}{%
+  \ifhuas@footer
     \leavevmode
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.2ex,
       leftskip=\beamer@leftmargin,rightskip=\beamer@rightmargin]{footline}
-      \usebeamerfont{footline}\insertshortinstitute\hfill
+      \usebeamerfont{footline}%
+      \ifhuas@minimalfooter\else\huas@footerlabel\fi\hfill
       \insertframenumber/\inserttotalframenumber
-      \ifhuas@logo
+      \ifhuas@minimalfooter\else\ifhuas@logo
         \ifx\huas@logofile\@empty\else
           \hspace{0.5em}\huas@insertlogo
         \fi
-      \fi
+      \fi\fi
     \end{beamercolorbox}%
-  }
-\else
-  \setbeamertemplate{footline}{}
-\fi
+  \fi
+}
 \mode<all>

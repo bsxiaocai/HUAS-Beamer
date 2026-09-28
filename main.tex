@@ -5,9 +5,14 @@
 % the conditions of LPPL 1.3c. See LICENSE and NOTICE.md.
 \documentclass[aspectratio=169]{ctexbeamer}
 
-\usetheme[logo]{HUAS}
+\usetheme{HUAS}
+\HUASsetup{style=academic,logo=true,footer=standard,sectionpage=true,
+  language=zh,faculty={湖南文理学院}}
 \IfFileExists{assets/research/HUAS-School_badge-white_background.jpg}{%
   \HUASsetlogo{assets/research/HUAS-School_badge-white_background.jpg}%
+}{}
+\IfFileExists{assets/research/HUAS_building_1_bgcolor.png}{%
+  \HUASsetbuilding{assets/research/HUAS_building_1_bgcolor.png}%
 }{}
 
 \title{HUAS-Beamer 视觉页面示例}
@@ -18,15 +23,9 @@
 
 \begin{document}
 
-\begin{frame}[plain,noframenumbering]
-  \titlepage
-\end{frame}
+\HUASmaketitle
 
 \section{研究背景与目标}
-{\setbeamercolor{background canvas}{bg=HUASWarmPaper}
-\begin{frame}[plain,noframenumbering]
-  \sectionpage
-\end{frame}}
 
 \begin{frame}{研究背景}
   面向学术报告的页面应让结论、证据与结构一眼可辨。
@@ -48,8 +47,8 @@
       \end{itemize}
     \end{column}
     \begin{column}{0.43\textwidth}
-      \IfFileExists{assets/research/reference_2.png}{%
-        \includegraphics[width=\linewidth]{assets/research/reference_2.png}%
+      \IfFileExists{assets/research/HUAS_building_2_bgcolor.png}{%
+        \includegraphics[width=\linewidth]{assets/research/HUAS_building_2_bgcolor.png}%
       }{%
         \fbox{\parbox[c][2.8cm][c]{0.9\linewidth}{\centering 校园图片}}%
       }\par
@@ -58,9 +57,6 @@
   \end{columns}
 \end{frame}
 
-{\setbeamercolor{background canvas}{bg=HUASWarmPaper}
-\begin{frame}[plain,noframenumbering]
-  \HUASclosingpage
-\end{frame}}
+\HUASclosingframe
 
 \end{document}

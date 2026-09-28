@@ -15,6 +15,26 @@
 }
 \newcommand{\huas@insertlogo}[1][0.34cm]{%
   \ifx\huas@logofile\@empty\else
-    \includegraphics[height=#1]{\huas@logofile}%
+    \includegraphics[width=0.15\textwidth,height=#1,keepaspectratio]{\huas@logofile}%
+  \fi
+}
+
+% User-supplied artwork is optional and keeps its original colors/transparency.
+\let\huas@buildingfile\@empty
+\newcommand{\HUASsetbuilding}[1]{%
+  \if\relax\detokenize{#1}\relax
+    \let\huas@buildingfile\@empty
+  \else
+    \IfFileExists{#1}{\def\huas@buildingfile{#1}}{%
+      \let\huas@buildingfile\@empty
+      \PackageWarning{beamerthemeHUAS}{Building image not found: #1}%
+    }%
+  \fi
+}
+\newcommand{\huas@insertbuilding}{%
+  \ifx\huas@buildingfile\@empty
+    \resizebox{!}{0.14\paperheight}{\huas@campuslineart}%
+  \else
+    \includegraphics[width=\linewidth,height=0.20\paperheight,keepaspectratio]{\huas@buildingfile}%
   \fi
 }

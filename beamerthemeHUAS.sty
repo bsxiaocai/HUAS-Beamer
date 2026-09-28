@@ -6,16 +6,13 @@
 % Current Maintainer: bsxiaocai. See LICENSE and NOTICE.md.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemeHUAS}[2026/09/26 Phase 2 HUAS Beamer theme]
+\ProvidesPackage{beamerthemeHUAS}[2026/09/28 Phase 3 HUAS Beamer theme]
 
 % A small original campus outline uses TikZ, which is already part of Beamer's PGF stack.
 \RequirePackage{tikz}
 
-\newif\ifhuas@footer
-\huas@footertrue
-\newif\ifhuas@logo
-\huas@logofalse
-\DeclareOptionBeamer{footer}{\huas@footertrue}
+\input{theme/huas-config.tex}
+\DeclareOptionBeamer{footer}{\huas@footertrue\huas@minimalfooterfalse}
 \DeclareOptionBeamer{nofooter}{\huas@footerfalse}
 \DeclareOptionBeamer{logo}{\huas@logotrue}
 \DeclareOptionBeamer{nologo}{\huas@logofalse}

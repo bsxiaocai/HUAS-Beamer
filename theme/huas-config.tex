@@ -1,0 +1,46 @@
+% Copyright (C) 2026 bsxiaocai
+% SPDX-License-Identifier: LPPL-1.3c
+% LPPL maintenance status: maintained.
+% Current Maintainer: bsxiaocai. See LICENSE and NOTICE.md.
+
+% Preamble configuration; legacy theme options use the same state.
+\newif\ifhuas@footer
+\huas@footertrue
+\newif\ifhuas@logo
+\huas@logofalse
+\newif\ifhuas@sectionpage
+\huas@sectionpagefalse
+\newif\ifhuas@english
+\huas@englishfalse
+\newif\ifhuas@warm
+\huas@warmfalse
+\newif\ifhuas@minimalfooter
+\huas@minimalfooterfalse
+\let\huas@faculty\@empty
+\pgfkeys{/huas/.is family, /huas/.cd,
+  style/.is choice,
+  style/academic/.code=\huas@warmfalse,
+  style/warm/.code=\huas@warmtrue,
+  logo/.is choice,
+  logo/true/.code=\huas@logotrue,
+  logo/false/.code=\huas@logofalse,
+  footer/.is choice,
+  footer/standard/.code={\huas@footertrue\huas@minimalfooterfalse},
+  footer/minimal/.code={\huas@footertrue\huas@minimalfootertrue},
+  footer/none/.code=\huas@footerfalse,
+  sectionpage/.is choice,
+  sectionpage/true/.code=\huas@sectionpagetrue,
+  sectionpage/false/.code=\huas@sectionpagefalse,
+  language/.is choice,
+  language/zh/.code=\huas@englishfalse,
+  language/en/.code=\huas@englishtrue,
+  faculty/.store in=\huas@faculty
+}
+\newcommand{\HUASsetup}[1]{\pgfkeys{/huas/.cd,#1}}
+\@onlypreamble\HUASsetup
+
+\newcommand{\huas@schoolname}{\ifhuas@english HUAS\else 湖南文理学院\fi}
+\newcommand{\huas@schoolsecondary}{Hunan University of Arts and Science}
+\newcommand{\huas@motto}{\ifhuas@english HUAS\else 博学弘文，明理求真\fi}
+\newcommand{\huas@footerlabel}{%
+  \ifx\huas@faculty\@empty\insertshortinstitute\else\huas@faculty\fi}

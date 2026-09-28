@@ -25,4 +25,24 @@
 \setbeamercolor{frametitle}{fg=HUASRed,bg=HUASPaper}
 \setbeamercolor{footline}{fg=HUASMuted,bg=HUASPaper}
 \setbeamercolor{alerted text}{fg=HUASRed}
+% Hero colors are independent of the light academic content canvas.
+\newcommand{\huas@academiccolors}{%
+  \setbeamercolor{HUAS title canvas}{bg=HUASPaper}%
+  \setbeamercolor{HUAS divider canvas}{bg=HUASWarmPaper}%
+  \setbeamercolor{HUAS hero}{fg=HUASInk}%
+  \setbeamercolor{HUAS hero title}{fg=HUASRed}%
+  \setbeamercolor{HUAS hero muted}{fg=HUASMuted}%
+  \setbeamercolor{HUAS hero rule}{fg=HUASRed}%
+  \setbeamercolor{HUAS hero footer}{fg=HUASMuted,bg=HUASWarmPaper}%
+}
+\newcommand{\huas@warmcolors}{%
+  \setbeamercolor{HUAS title canvas}{bg=HUASRed}%
+  \setbeamercolor{HUAS divider canvas}{bg=HUASRed}%
+  \setbeamercolor{HUAS hero}{fg=HUASPaper}%
+  \setbeamercolor{HUAS hero title}{fg=HUASPaper}%
+  \setbeamercolor{HUAS hero muted}{fg=HUASPaper}%
+  \setbeamercolor{HUAS hero rule}{fg=HUASPaper}%
+  \setbeamercolor{HUAS hero footer}{fg=HUASMuted,bg=HUASPaper}%
+}
+\huas@academiccolors
 \mode<all>
