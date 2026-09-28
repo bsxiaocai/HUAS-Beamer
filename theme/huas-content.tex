@@ -1,0 +1,29 @@
+% Copyright (C) 2026 bsxiaocai
+% SPDX-License-Identifier: LPPL-1.3c
+% This file is part of HUAS-Beamer under LPPL 1.3c.
+% LPPL maintenance status: maintained.
+% Current Maintainer: bsxiaocai. See LICENSE and NOTICE.md.
+
+% Keep native Beamer environments; only attribution and a complete key-point
+% frame need project commands. No verbatim wrapper or bibliography backend.
+\setbeamertemplate{blocks}[default]
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{section in toc}[sections numbered]
+\newenvironment{HUASquotation}[1]{%
+  \def\huas@quotesource{#1}%
+  \begin{beamercolorbox}[wd=\linewidth,sep=0.8em]{HUAS quotation}
+    \usebeamerfont{quotation}%
+}{%
+    \par\medskip
+    {\raggedleft\usebeamerfont{HUAS source}\usebeamercolor[fg]{HUAS source}%
+      \huas@quotesource\par}%
+  \end{beamercolorbox}%
+}
+\newcommand{\HUASkeypoint}[2]{%
+  \begin{frame}{#1}
+    \begin{beamercolorbox}[wd=\textwidth,sep=1em]{HUAS quotation}
+      \usebeamerfont{HUAS key point}#2\par
+    \end{beamercolorbox}
+  \end{frame}%
+}

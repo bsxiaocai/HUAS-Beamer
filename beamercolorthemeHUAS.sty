@@ -17,6 +17,10 @@
 \definecolor{HUASPaper}{HTML}{FFFFFF}
 \definecolor{HUASWarmPaper}{HTML}{F8F4EF}
 \definecolor{HUASLine}{HTML}{E5DDD8}
+% Sampled from the supplied teaching PDF; these are project-derived colors.
+\definecolor{HUASBlue}{HTML}{3333B2}
+\definecolor{HUASNavy}{HTML}{191959}
+\definecolor{HUASCoolPaper}{HTML}{E9E9F3}
 
 \setbeamercolor{background canvas}{bg=HUASPaper}
 \setbeamercolor{normal text}{fg=HUASInk,bg=HUASPaper}
@@ -44,5 +48,46 @@
   \setbeamercolor{HUAS hero rule}{fg=HUASPaper}%
   \setbeamercolor{HUAS hero footer}{fg=HUASMuted,bg=HUASPaper}%
 }
-\huas@academiccolors
+\newcommand{\huas@coolcolors}{%
+  \setbeamercolor{HUAS title canvas}{bg=HUASPaper}%
+  \setbeamercolor{HUAS divider canvas}{bg=HUASCoolPaper}%
+  \setbeamercolor{HUAS hero}{fg=HUASNavy}%
+  \setbeamercolor{HUAS hero title}{fg=HUASBlue}%
+  \setbeamercolor{HUAS hero muted}{fg=HUASMuted}%
+  \setbeamercolor{HUAS hero rule}{fg=HUASBlue}%
+  \setbeamercolor{HUAS hero footer}{fg=HUASMuted,bg=HUASCoolPaper}%
+}
+\newcommand{\huas@contentcolors}{%
+  \ifhuas@cool
+    \colorlet{HUASAccent}{HUASBlue}%
+    \colorlet{HUASGraphic}{HUASBlue!65}%
+    \setbeamercolor{frametitle}{fg=HUASPaper,bg=HUASBlue}%
+    \setbeamercolor{footline}{fg=HUASPaper,bg=HUASNavy}%
+    \huas@coolcolors
+  \else
+    \colorlet{HUASAccent}{HUASRed}%
+    \colorlet{HUASGraphic}{HUASTerracotta!65}%
+    \setbeamercolor{frametitle}{fg=HUASRed,bg=HUASPaper}%
+    \setbeamercolor{footline}{fg=HUASMuted,bg=HUASPaper}%
+    \huas@academiccolors
+  \fi
+  \setbeamercolor{structure}{fg=HUASAccent}%
+  \setbeamercolor{title}{fg=HUASAccent}%
+  \setbeamercolor{HUAS context}{fg=HUASPaper,bg=HUASNavy}%
+  \setbeamercolor{block title}{fg=HUASPaper,bg=HUASAccent}%
+  \setbeamercolor{block body}{fg=HUASInk,bg=HUASAccent!8}%
+  \setbeamercolor{block title alerted}{fg=HUASPaper,bg=HUASRed!90!black}%
+  \setbeamercolor{block body alerted}{fg=HUASInk,bg=HUASRed!6}%
+  \setbeamercolor{block title example}{fg=HUASInk,bg=HUASAccent!18}%
+  \setbeamercolor{block body example}{fg=HUASInk,bg=HUASAccent!4}%
+  \setbeamercolor{HUAS quotation}{fg=HUASInk,bg=HUASAccent!6}%
+  \setbeamercolor{HUAS source}{fg=HUASMuted}%
+  \setbeamercolor{caption}{fg=HUASInk}%
+  \setbeamercolor{caption name}{fg=HUASAccent}%
+  \setbeamercolor{bibliography entry author}{fg=HUASInk}%
+  \setbeamercolor{bibliography entry title}{fg=HUASInk}%
+  \setbeamercolor{bibliography entry location}{fg=HUASMuted}%
+  \setbeamercolor{bibliography entry note}{fg=HUASMuted}%
+}
+\huas@contentcolors
 \mode<all>

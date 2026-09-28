@@ -9,14 +9,24 @@
 \ProvidesPackage{beamerouterthemeHUAS}[2026/09/26 HUAS Beamer outer theme]
 
 \mode<presentation>
+\setbeamertemplate{headline}{%
+  \ifhuas@cool
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.2ex,
+      leftskip=\beamer@leftmargin,rightskip=\beamer@rightmargin]{HUAS context}
+      \usebeamerfont{footline}\insertsectionhead\hfill\huas@schoolname
+    \end{beamercolorbox}%
+  \fi
+}
 \setbeamertemplate{frametitle}{%
   \nointerlineskip
   \begin{beamercolorbox}[wd=\paperwidth,leftskip=\beamer@leftmargin,
     rightskip=\beamer@rightmargin,sep=0.15cm]{frametitle}
     \usebeamerfont{frametitle}\strut\insertframetitle\strut
   \end{beamercolorbox}%
-  \nointerlineskip
-  \hbox to\textwidth{\color{HUASLine}\leaders\hrule height0.4pt\hfill}%
+  \ifhuas@cool\else
+    \nointerlineskip
+    \hbox to\textwidth{\color{HUASLine}\leaders\hrule height0.4pt\hfill}%
+  \fi
 }
 
 \setbeamertemplate{footline}{%

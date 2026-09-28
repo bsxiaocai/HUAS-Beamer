@@ -1,0 +1,143 @@
+% !TeX program = xelatex
+% Copyright (C) 2026 bsxiaocai
+% SPDX-License-Identifier: LPPL-1.3c
+% Example distributed under LPPL 1.3c. See LICENSE and NOTICE.md.
+% Compile from the project root: xelatex -output-directory=build examples/cool-demo.tex
+\documentclass[aspectratio=169]{ctexbeamer}
+\usetheme{HUAS}
+\HUASsetup{style=cool,logo=true,footer=standard,sectionpage=true,
+  faculty={教学与学术交流}}
+\IfFileExists{assets/research/HUAS-School_badge-white_background.jpg}{%
+  \HUASsetlogo{assets/research/HUAS-School_badge-white_background.jpg}%
+}{}
+\title{阅读、证据与教学设计}
+\subtitle{HUAS-Beamer 冷色样式与学术内容组件}
+\author{HUAS-Beamer 项目}
+\institute{湖南文理学院}
+\date{\today}
+\begin{document}
+\HUASmaketitle
+\begin{frame}{内容结构}
+  \tableofcontents[hideallsubsections]
+\end{frame}
+\section{研究与论证}
+\begin{frame}{结论、证据与边界}
+  \begin{block}{核心判断}
+    阅读任务应让学生给出文本证据，而不只是复述教师结论。
+  \end{block}
+  \begin{alertblock}{适用边界}
+    单个教学案例不能直接证明所有学生都适用同一策略。
+  \end{alertblock}
+  \begin{exampleblock}{可以观察的表现}
+    学生能定位语句、解释推理，并回应不同理解。
+  \end{exampleblock}
+\end{frame}
+\begin{frame}{引文与出处}
+  \begin{HUASquotation}{《论语·为政》}
+    学而不思则罔，思而不学则殆。
+  \end{HUASquotation}
+  \medskip
+  引文与讨论分开呈现，读者可以辨认原文和汇报者的分析。
+\end{frame}
+\begin{frame}{研究流程：问题如何变为证据}
+  \begin{enumerate}
+    \item \textbf{提出问题}：明确需要解释的阅读现象。
+    \item \textbf{收集材料}：保留文本批注与课堂讨论记录。
+    \item \textbf{比较解释}：寻找支持与反对判断的证据。
+    \item \textbf{说明边界}：交代样本范围与尚未解决的问题。
+  \end{enumerate}
+\end{frame}
+\section{文本与教学}
+\begin{frame}{文本细读：原文与分析并列}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \begin{HUASquotation}{陆游《游山西村》}
+        山重水复疑无路，\\柳暗花明又一村。
+      \end{HUASquotation}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{细读问题}
+        \begin{itemize}
+          \item 哪些词语表现视野的变化？
+          \item 两句之间如何形成转折？
+          \item 解释如何回到具体语词？
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+\begin{frame}{教学案例：目标、任务与反馈}
+  \begin{block}{学习目标}
+    学生能从一段文本中选择证据，解释自己的理解。
+  \end{block}
+  \begin{exampleblock}{任务与反馈}
+    \begin{itemize}
+      \item 先独立标注，再与同伴比较不同的解释。
+      \item 汇报时展示语句与推理，反馈聚焦证据是否充分。
+    \end{itemize}
+  \end{exampleblock}
+\end{frame}
+\begin{frame}{表格：把任务和证据对应起来}
+  \begin{table}
+    \caption{教学活动与可观察证据}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{lll}
+      \hline
+      \textbf{环节} & \textbf{阅读任务} & \textbf{证据形式} \\
+      \hline
+      初读 & 记录疑问 & 问题清单 \\
+      细读 & 标注关键语句 & 带说明的批注 \\
+      讨论 & 比较不同解释 & 观点与依据 \\
+      反思 & 修改最初判断 & 修订记录 \\
+      \hline
+    \end{tabular}
+  \end{table}
+  \medskip
+  表格适合比较关系；长段原文应拆到文本细读页。
+\end{frame}
+\begin{frame}{图片：交代对象与来源}
+  \begin{figure}
+    \IfFileExists{assets/research/HUAS_building_2_bgcolor.png}{%
+      \includegraphics[width=0.65\textwidth]{assets/research/HUAS_building_2_bgcolor.png}%
+      \caption{校园建筑线稿}%
+    }{%
+      \fbox{\parbox[c][2.2cm][c]{0.6\textwidth}{\centering 校园图片}}%
+      \caption{图片位置示例}%
+    }
+  \end{figure}
+  {\usebeamerfont{HUAS source}\color{HUASMuted}
+    \IfFileExists{assets/research/HUAS_building_2_bgcolor.png}{%
+      图源：项目所有者提供的本地研究素材。%
+    }{图片缺失，当前显示占位框。}\par}
+  \medskip
+  图注说明对象，来源说明帮助读者追溯素材。
+\end{frame}
+\begin{frame}[fragile]{代码：用短片段说明处理过程}
+  \begin{block}{Python 示例：统计已经完成的阅读任务}
+    \small
+    \begin{verbatim}
+tasks = ["read", "annotate", "discuss"]
+completed = {"read", "annotate"}
+progress = sum(task in completed for task in tasks)
+print(progress, "/", len(tasks))
+    \end{verbatim}
+  \end{block}
+  \medskip
+  代码页使用原生 verbatim；中文解释放在代码区外。
+\end{frame}
+\section{总结与资料}
+\HUASkeypoint{关键结论}{让问题引导阅读，\\让证据支持判断。}
+\begin{frame}{参考文献与进一步阅读}
+  \begin{thebibliography}{9}
+    \bibitem{classic}《论语·为政》.
+      \newblock 本示例引文的出处。
+    \bibitem{beamer}Till Tantau, Joseph Wright, Vedran Miletić.
+      \newblock The beamer class: User Guide.
+      \newblock TeX Live 随附的 Beamer 手册。
+    \bibitem{huas}HUAS-Beamer 项目.
+      \newblock 使用说明与阶段开发记录.
+      \newblock 本仓库 README 与 docs。
+  \end{thebibliography}
+\end{frame}
+\HUASclosingframe
+\end{document}

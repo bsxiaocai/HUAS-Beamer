@@ -21,6 +21,9 @@
   \end{beamercolorbox}%
 }
 \setbeamertemplate{title page}{%
+  \ifhuas@cool
+    \usebeamertemplate{HUAS cool title page}%
+  \else
   \vspace*{0.04\paperheight}%
   \noindent
   \ifhuas@logo
@@ -43,6 +46,26 @@
   \vfill
   \huas@herofooter{\usebeamerfont{HUAS title meta}\insertauthor\par
     \insertinstitute\par\insertdate\par}%
+  \vspace*{0.03\paperheight}%
+  \fi
+}
+\setbeamertemplate{HUAS cool title page}{%
+  \vspace*{0.04\paperheight}%
+  {\usebeamerfont{HUAS school name}\usebeamercolor[fg]{HUAS hero}\huas@schoolname\par}%
+  {\usebeamerfont{HUAS english name}\usebeamercolor[fg]{HUAS hero muted}\huas@schoolsecondary\par}%
+  \vfill
+  \begin{beamercolorbox}[wd=\textwidth,sep=0.6em,center]{frametitle}
+    {\usebeamerfont{title}\inserttitle\par}%
+    \ifx\insertsubtitle\@empty\else
+      \vspace{0.4em}{\usebeamerfont{subtitle}\insertsubtitle\par}%
+    \fi
+  \end{beamercolorbox}%
+  \vfill
+  {\centering\usebeamerfont{HUAS title meta}\insertauthor\par
+    \insertinstitute\par\insertdate\par}%
+  \vfill
+  \huas@herofooter{\usebeamerfont{HUAS motto}\huas@motto\par
+    \ifhuas@logo\huas@insertlogo[0.62cm]\fi}%
   \vspace*{0.03\paperheight}%
 }
 \setbeamertemplate{section page}{%
@@ -78,7 +101,9 @@
 % Scope hero colors to a complete frame, restoring the content canvas afterwards.
 \newcommand{\huas@heroframe}[2]{%
   \begingroup
-  \ifhuas@warm\huas@warmcolors\else\huas@academiccolors\fi
+  \ifhuas@cool\huas@coolcolors\else
+    \ifhuas@warm\huas@warmcolors\else\huas@academiccolors\fi
+  \fi
   \setbeamercolor{background canvas}{use=#1,bg=#1.bg}%
   \begin{frame}[plain,noframenumbering]
     #2

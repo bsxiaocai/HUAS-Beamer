@@ -14,13 +14,16 @@
 \huas@englishfalse
 \newif\ifhuas@warm
 \huas@warmfalse
+\newif\ifhuas@cool
+\huas@coolfalse
 \newif\ifhuas@minimalfooter
 \huas@minimalfooterfalse
 \let\huas@faculty\@empty
 \pgfkeys{/huas/.is family, /huas/.cd,
   style/.is choice,
-  style/academic/.code=\huas@warmfalse,
-  style/warm/.code=\huas@warmtrue,
+  style/academic/.code={\huas@warmfalse\huas@coolfalse\huas@contentcolors},
+  style/warm/.code={\huas@warmtrue\huas@coolfalse\huas@contentcolors},
+  style/cool/.code={\huas@warmfalse\huas@cooltrue\huas@contentcolors},
   logo/.is choice,
   logo/true/.code=\huas@logotrue,
   logo/false/.code=\huas@logofalse,

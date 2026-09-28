@@ -7,9 +7,9 @@ HUAS-Beamer 是独立开发的 LaTeX Beamer 主题。目前并非湖南文理学
 `LICENSE` 是未经修改的 LaTeX Project Public License 1.3c 正文。计划按 LPPL-1.3c 发布的 HUAS-Beamer 自主开发源码为：
 
 - `beamerthemeHUAS.sty`、`beamercolorthemeHUAS.sty`、`beamerfontthemeHUAS.sty`、`beamerinnerthemeHUAS.sty`、`beamerouterthemeHUAS.sty`；
-- `theme/huas-assets.tex`、`theme/huas-config.tex`；
+- `theme/huas-assets.tex`、`theme/huas-config.tex`、`theme/huas-content.tex`；
 - `assets/lineart/campus-outline.tex`（项目绘制的建筑示意线稿）；
-- 示例源码 `main.tex`。
+- 示例源码 `main.tex`、`examples/cool-demo.tex`。
 
 源码版权持有人与 Current Maintainer 均为 `bsxiaocai`，LPPL maintenance status 为 `maintained`。公开发布前仍需确认可联系的维护渠道，并复核所有素材与文档的分发权利。
 
