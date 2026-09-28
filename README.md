@@ -2,6 +2,12 @@
 
 湖南文理学院主题的 LaTeX Beamer 项目。目前完成 Phase 6 的自主微调参数与逐模板操作说明，并提供 Academic Light、HUAS Warm 和蓝色 Cool 三套样式。
 
+## 从这里开始
+
+- 第一次使用 LaTeX：[零基础使用手册](docs/user-manual.md)，从安装、第一份 PDF、逐行改字到图片、公式、表格、尺寸调整和排错。
+- 查看项目完成情况：[五阶段开发总评](docs/development-overview.md)，逐项对照开发总纲、历史总结与当前源码，说明已完成内容、纠正过程和剩余限制。
+- 已能编译、只需要细调：[共享微调说明](docs/customization.md)和下面的四份逐模板指南。
+
 ## 编译
 
 需要安装包含 `ctexbeamer` 的 TeX Live，并使用 XeLaTeX。在项目根目录运行（先创建 `build/`）：

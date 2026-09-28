@@ -2,6 +2,8 @@
 
 本说明对应 Phase 6 源码。四份示例分别有逐页指南：[最小模板](templates/main.md)、[Academic 学术模板](templates/academic.md)、[Warm 研讨模板](templates/seminar.md)、[Cool 蓝色模板](templates/cool.md)。请先复制要使用的示例，再在导言区修改；根目录的五个主题文件和 theme 目录为共享实现。
 
+如果尚未使用过 LaTeX，先读[零基础使用手册](user-manual.md)，其中解释编辑、保存、终端命令、完整文档与正文片段。项目整体完成情况见[五阶段开发总评](development-overview.md)。
+
 ## 1. 配置位置与编译
 
 配置顺序如下。尺寸参数只在导言区设置，可分多次调用，后一次只覆盖指定项：
