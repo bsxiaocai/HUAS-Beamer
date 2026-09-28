@@ -1,0 +1,75 @@
+% !TeX program = xelatex
+% Copyright (C) 2026 bsxiaocai
+% SPDX-License-Identifier: LPPL-1.3c
+% Example under LPPL 1.3c. See LICENSE and NOTICE.md.
+% Compile from the repository root.
+\documentclass[aspectratio=169]{ctexbeamer}
+\usetheme{HUAS}
+\HUASsetup{style=academic,logo=true,sectionpage=true,faculty={学术交流}}
+\input{examples/local-assets.tex}
+\title{从阅读问题到研究证据}
+\subtitle{学术汇报示例}
+\author{汇报者}
+\institute{湖南文理学院}
+\date{\today}
+\begin{document}
+\HUASmaketitle
+\begin{frame}{汇报结构}
+  \tableofcontents[hideallsubsections]
+\end{frame}
+\section{问题与方法}
+\begin{frame}{研究问题：学生如何解释文本？}
+  \begin{block}{研究对象}
+    观察学生从选择语句到形成解释的过程。
+  \end{block}
+  \begin{itemize}
+    \item 问题：解释是否有明确的文本依据？
+    \item 材料：阅读批注、讨论记录与修订稿。
+    \item 边界：本示例展示汇报结构，不提供实证结果。
+  \end{itemize}
+\end{frame}
+\begin{frame}{方法：建立可复核的分析过程}
+  \begin{enumerate}
+    \item 保留原始记录，明确每段材料的来源。
+    \item 分别标记观点、证据与推理过程。
+    \item 比较不同判断，并记录分歧的处理方式。
+  \end{enumerate}
+  \medskip
+  用比例说明证据覆盖范围：
+  \[
+    r=\frac{n_{\mathrm{supported}}}{n_{\mathrm{total}}}
+  \]
+  其中分子为有文本依据的解释数，分母为全部解释数。
+\end{frame}
+\section{分析与讨论}
+\begin{frame}{分析框架：让判断与材料对应}
+  \begin{table}
+    \caption{观察维度与材料位置}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{lll}
+      \hline
+      \textbf{维度} & \textbf{观察问题} & \textbf{材料} \\
+      \hline
+      观点 & 判断是否清楚？ & 讨论记录 \\
+      证据 & 语句是否相关？ & 阅读批注 \\
+      推理 & 如何联系观点？ & 修订稿 \\
+      \hline
+    \end{tabular}
+  \end{table}
+  \begin{alertblock}{报告时需要说明}
+    分析框架与研究发现应分别呈现；未验证的判断不要写成结论。
+  \end{alertblock}
+\end{frame}
+\HUASkeypoint{讨论与结论}{结论回到证据，\\解释保留边界。}
+\begin{frame}{参考资料}
+  \begin{thebibliography}{9}
+    \bibitem{guide}Till Tantau, Joseph Wright, Vedran Miletić.
+      \newblock The beamer class: User Guide.
+      \newblock TeX Live 随附文档。
+    \bibitem{project}HUAS-Beamer 项目.
+      \newblock 主题使用说明与阶段记录.
+      \newblock 本仓库 README 与 docs。
+  \end{thebibliography}
+\end{frame}
+\HUASclosingframe
+\end{document}

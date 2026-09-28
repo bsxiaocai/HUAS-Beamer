@@ -6,10 +6,7 @@
 % Current Maintainer: bsxiaocai. See LICENSE and NOTICE.md.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemeHUAS}[2026/09/28 Phase 4 HUAS Beamer theme]
-
-% A small original campus outline uses TikZ, which is already part of Beamer's PGF stack.
-\RequirePackage{tikz}
+\ProvidesPackage{beamerthemeHUAS}[2026/09/28 Phase 5 HUAS Beamer theme]
 
 \input{theme/huas-config.tex}
 \DeclareOptionBeamer{footer}{\huas@footertrue\huas@minimalfooterfalse}
@@ -23,7 +20,6 @@
 \usefonttheme{HUAS}
 \useinnertheme{HUAS}
 \input{theme/huas-assets.tex}
-\input{assets/lineart/campus-outline.tex}
 \input{theme/huas-content.tex}
 \useoutertheme{HUAS}
 \setbeamertemplate{navigation symbols}{}

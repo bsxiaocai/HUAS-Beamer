@@ -27,8 +27,10 @@
   \vspace*{0.04\paperheight}%
   \noindent
   \ifhuas@logo
+    \ifhuas@warm\else
     \ifx\huas@logofile\@empty\else
       \raisebox{-0.12cm}{\huas@insertlogo[0.82cm]}\hspace{0.8em}%
+    \fi
     \fi
   \fi
   \begin{minipage}{0.72\textwidth}
@@ -44,7 +46,14 @@
   \vspace{1.2em}%
   {\usebeamercolor[fg]{HUAS hero rule}\rule{0.18\textwidth}{1.5pt}\par}%
   \vfill
-  \huas@herofooter{\usebeamerfont{HUAS title meta}\insertauthor\par
+  \huas@herofooter{\usebeamerfont{HUAS title meta}%
+    % The red transparent badge stays legible on Warm's light metadata panel.
+    \ifhuas@warm\ifhuas@logo
+      \ifx\huas@logofile\@empty\else
+        \raisebox{-0.15cm}{\huas@insertlogo[0.62cm]}\hspace{0.4em}%
+      \fi
+    \fi\fi
+    \insertauthor\par
     \insertinstitute\par\insertdate\par}%
   \vspace*{0.03\paperheight}%
   \fi

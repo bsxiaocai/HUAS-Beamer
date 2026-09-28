@@ -1,0 +1,65 @@
+% !TeX program = xelatex
+% Copyright (C) 2026 bsxiaocai
+% SPDX-License-Identifier: LPPL-1.3c
+% Example under LPPL 1.3c. See LICENSE and NOTICE.md.
+% Compile from the repository root.
+\documentclass[aspectratio=169]{ctexbeamer}
+\usetheme{HUAS}
+\HUASsetup{style=warm,logo=true,footer=minimal,sectionpage=true,
+  faculty={读书分享与研讨}}
+\input{examples/local-assets.tex}
+\title{在文本中寻找解释的依据}
+\subtitle{读书分享与研讨示例}
+\author{分享者}
+\institute{湖南文理学院}
+\date{\today}
+\begin{document}
+\HUASmaketitle
+\begin{frame}{分享结构}
+  \tableofcontents[hideallsubsections]
+\end{frame}
+\section{阅读与细读}
+\begin{frame}{先读原文，再提出问题}
+  \begin{HUASquotation}{陆游《游山西村》}
+    山重水复疑无路，柳暗花明又一村。
+  \end{HUASquotation}
+  \medskip
+  \begin{itemize}
+    \item 哪些词语表现行进过程与视野变化？
+    \item “疑”与“又”怎样影响读者的感受？
+    \item 除了抽象道理，诗句还呈现了怎样的景物？
+  \end{itemize}
+\end{frame}
+\begin{frame}{文本细读：记录与解释并列}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.47\textwidth}
+      \begin{block}{可直接观察的语词}
+        \begin{itemize}
+          \item 山重、水复
+          \item 疑无路
+          \item 柳暗、花明、又一村
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{exampleblock}{据此展开的解释}
+        从行路受阻到视野开阔，景物与情绪同时发生变化。
+        解释应联系前后语句，不把诗句压缩为单一道理。
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+\section{交流与反思}
+\begin{frame}{研讨：比较不同解释}
+  \begin{enumerate}
+    \item 每人提出一个判断，并展示对应的语词。
+    \item 同伴提出另一种可能的理解。
+    \item 回到原文，比较两种解释的支持程度。
+  \end{enumerate}
+  \begin{alertblock}{讨论边界}
+    不同理解可以并存，但都需要说明依据。
+  \end{alertblock}
+\end{frame}
+\HUASkeypoint{阅读后的反思}{保留自己的问题，\\也听见其他的解释。}
+\HUASclosingframe
+\end{document}

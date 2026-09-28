@@ -33,7 +33,7 @@
 }
 \newcommand{\huas@insertbuilding}{%
   \ifx\huas@buildingfile\@empty
-    \resizebox{!}{0.14\paperheight}{\huas@campuslineart}%
+    % No artwork is invented when an asset is absent.
   \else
     \includegraphics[width=\linewidth,height=0.20\paperheight,keepaspectratio]{\huas@buildingfile}%
   \fi

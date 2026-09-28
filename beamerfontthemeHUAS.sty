@@ -9,24 +9,30 @@
 \ProvidesPackage{beamerfontthemeHUAS}[2026/09/26 HUAS Beamer font hierarchy]
 
 \mode<presentation>
-% ctexbeamer supplies portable Chinese font selection for XeLaTeX.
-\setbeamerfont{title}{size=\LARGE,series=\bfseries}
-\setbeamerfont{subtitle}{size=\normalsize}
-\setbeamerfont{HUAS school name}{size=\normalsize,series=\bfseries}
+% Body uses the ctex Song family; headings use its Hei family on each platform.
+% SimHei has no native bold face, so only that family uses a modest fake bold.
+\IfFontExistsTF{SimHei}{%
+  \newCJKfontfamily\huas@heiti[AutoFakeBold=2]{SimHei}%
+}{\newcommand{\huas@heiti}{\heiti}}
+\renewcommand{\familydefault}{\rmdefault}
+\setbeamerfont{normal text}{family=\rmfamily}
+\setbeamerfont{title}{family={\sffamily\huas@heiti},size=\LARGE,series=\bfseries}
+\setbeamerfont{subtitle}{family=\rmfamily,size=\normalsize,series=\mdseries}
+\setbeamerfont{HUAS school name}{family={\sffamily\huas@heiti},size=\normalsize,series=\bfseries}
 \setbeamerfont{HUAS english name}{size=\scriptsize}
 \setbeamerfont{HUAS title meta}{size=\small}
-\setbeamerfont{section title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{section title}{family={\sffamily\huas@heiti},size=\LARGE,series=\bfseries}
 \setbeamerfont{HUAS section label}{size=\small}
 \setbeamerfont{HUAS motto}{size=\scriptsize}
-\setbeamerfont{HUAS closing title}{size=\LARGE,series=\bfseries}
-\setbeamerfont{frametitle}{size=\large,series=\bfseries}
-\setbeamerfont{footline}{size=\scriptsize}
-\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
-\setbeamerfont{block body}{size=\normalsize}
+\setbeamerfont{HUAS closing title}{family={\sffamily\huas@heiti},size=\LARGE,series=\bfseries}
+\setbeamerfont{frametitle}{family={\sffamily\huas@heiti},size=\large,series=\bfseries}
+\setbeamerfont{footline}{family={\sffamily\huas@heiti},size=\scriptsize}
+\setbeamerfont{block title}{family={\sffamily\huas@heiti},size=\normalsize,series=\bfseries}
+\setbeamerfont{block body}{family=\rmfamily,size=\normalsize}
 \setbeamerfont{quote}{size=\normalsize,shape=\upshape}
 \setbeamerfont{quotation}{size=\normalsize,shape=\upshape}
 \setbeamerfont{HUAS source}{size=\scriptsize}
-\setbeamerfont{HUAS key point}{size=\LARGE,series=\bfseries}
+\setbeamerfont{HUAS key point}{family={\sffamily\huas@heiti},size=\LARGE,series=\bfseries}
 \setbeamerfont{caption}{size=\small}
 \setbeamerfont{caption name}{series=\bfseries}
 \setbeamerfont{bibliography entry author}{size=\small}
