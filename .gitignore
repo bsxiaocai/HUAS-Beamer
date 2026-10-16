@@ -119,3 +119,4 @@ examples/*/.git/
 # ===== 第三方参考模板与调研素材（仅保留在本地，不提交不上传）=====
 examples/
 research/
+issues/
