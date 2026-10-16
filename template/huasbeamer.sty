@@ -1,0 +1,395 @@
+%%=======================================================================
+%% huasbeamer.sty —— 湖南文理学院 Beamer 主题样式文件（正式版）
+%% Hunan University of Arts and Science (HUAS) Beamer Theme
+%%=======================================================================
+%% 版本：v1.0（2025/06）
+%% 编译：XeLaTeX（中文默认）；英文文档加 [en] 选项后可用任意引擎
+%%
+%% ★ 快速使用 ★
+%%   \documentclass[aspectratio=169]{beamer}
+%%   \graphicspath{{figures/}}
+%%   \usepackage{huasbeamer}          % 中文
+%%   \usepackage[en]{huasbeamer}      % 英文
+%%
+%% ★ 主题选项 ★
+%%   en             英文模式（不加载 ctex，全英文编译）
+%%   notoc          关闭节前自动「渐变节页 + 目录页」（默认开启）
+%%   subsectiontoc  每个小节前也插入目录页
+%%   nonav          关闭页脚右下角翻页控件（默认开启）
+%%   ※ 选项可组合：\usepackage[en,notoc]{huasbeamer}
+%%
+%% ★ 可调整项速查（全文档详见 docs/模板使用与自定义说明.md）★
+%%   1. 内容填写  → HUAS-Beamer*.tex 导言区 \title/\subtitle/\author/\supervisor/
+%%                  \institute/\date（方括号内为页脚短标题）
+%%   2. 颜色      → 下方「色彩系统」区 \definecolor（搜 ★调色★）
+%%   3. 尺寸      → 各模板中已用「★尺寸★」注释标注（页脚高度/装饰带高度/
+%%                  线稿宽度/logo 宽度/横线长度等）
+%%   4. 图片      → \huassetlogo{} \huassetbadge{} \huassetdeco{} \huassetbg{}
+%%   5. 文字      → \huas@namecn/\huas@nameen/\huas@motto（校名/校训）
+%%   6. 字体      → 下方 ctex 的 fontset 选项（fandol / windows）
+%%
+%% 设计来源（有机结合三个高校模板 + 四个高校模板调研）：
+%%   - thubeamer（清华大学）：版式骨架、双行页脚、节前目录页、封面/封底范式
+%%   - NJIT（南京工程学院）：单样式文件轻量结构、校徽主题色、页脚/页码实现
+%%   - redus（厦门大学）：演示文档内容组织、底部翻页控件
+%%   - HNU/WHU/SCU/SJTU Beamer（调研补充）：导师命令、表格宏、构建脚本惯例
+%% 视觉规范来源：research/ 文件夹（校徽、校旗、建筑线稿、校训）
+%%=======================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{huasbeamer}[2025/06/01 v1.0 HUAS Beamer Theme]
+
+\mode<presentation>
+
+%% ================= 选项 =================
+\newif\ifhuas@en \huas@enfalse
+\newif\ifhuas@sectiontoc \huas@sectiontoctrue
+\newif\ifhuas@subsectiontoc \huas@subsectiontocfalse
+\newif\ifhuas@nav \huas@navtrue
+\newif\ifhuas@blue \huas@bluefalse
+\DeclareOptionBeamer{en}{\huas@entrue}
+\DeclareOptionBeamer{notoc}{\huas@sectiontocfalse}
+\DeclareOptionBeamer{subsectiontoc}{\huas@subsectiontoctrue}
+\DeclareOptionBeamer{nonav}{\huas@navfalse}
+\DeclareOptionBeamer{blue}{\huas@bluetrue} % ★调色★ 冷色调（蓝白）版本
+\ProcessOptionsBeamer
+
+%% ================= 宏包 =================
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+\RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{booktabs}
+\RequirePackage{colortbl} % 表格行着色（\huastableheader 宏使用）
+\ifhuas@en\else
+  % ★字体★ fontset=fandol（TeX Live 自带，跨平台）；
+  % Windows 用户可改为 fontset=windows（宋体/黑体/楷体）
+  \RequirePackage[fontset=fandol]{ctex}
+  % ★字体★ 内容中文使用黑体（参考《浅谈自读课文的教学》论文正文；西文/数字仍为 Times）
+  \setCJKmainfont{FandolHei-Regular}[BoldFont=FandolHei-Bold]
+\fi
+
+%% ================= 西文/数字字体（★字体★ 学术标准）=================
+%% 参考 SJTUBeamer（professionalfonts）、SCU-Beamer-Theme（Times 系数学）、
+%% sjtutex（上海交大西文字体规范）：西文与数字采用 Times 衬线体系
+%% 优先 Times New Roman（Win/Mac 自动存在），否则回退 TeX Gyre Termes（TeX Live 自带）
+\RequirePackage{fontspec}
+\IfFontExistsTF{Times New Roman}
+  {\setmainfont{Times New Roman}}
+  {\setmainfont{TeX Gyre Termes}}
+\usefonttheme{serif}           % 正文/标题使用衬线（学术风格）
+\usefonttheme{professionalfonts} % 数学字体交给 newtxmath，不受 beamer 覆盖
+\RequirePackage{newtxmath}     % 数学字体：Times 风格（学术标准）
+
+%% ================= 色彩系统（★调色★）=================
+%% 默认暖色调：取色自 research/ 素材（Python/Pillow 像素采样）
+%%   校徽红 #CC3433 | 校旗橙红 #EB3D00 | 赭红 #B34F21（加深→huasdeep）
+%%   建筑线稿 #E06742 | 校旗金 #F5B301 | 米白 #F7F2EC
+%% [blue] 选项：整套切换为冷色调（蓝白），同样以 huas* 颜色名驱动全部元素
+\ifhuas@blue
+  \definecolor{huasred}{HTML}{2B5FA8}     % 主色·学术蓝
+  \definecolor{huasdeep}{HTML}{16406E}    % 藏蓝（页脚第一行/渐变深端/标题字）
+  \definecolor{huasorange}{HTML}{2E86C1}  % 亮蓝（渐变亮端/alert 块）
+  \definecolor{huascoral}{HTML}{6FA8DC}   % 浅蓝（图注/目录小三角）
+  \definecolor{huasgold}{HTML}{9DC3E6}    % 淡蓝银
+  \definecolor{huascream}{HTML}{EFF4FA}   % 浅蓝白
+  \definecolor{huasbg}{HTML}{FFFFFF}      % ★调色★ 纯白底（冷色调版）
+\else
+  \definecolor{huasred}{HTML}{CC3433}     % 主色·校徽红（结构色/列表/块标题）
+  \definecolor{huasdeep}{HTML}{8F2420}    % 深红（页脚第一行/渐变深端/标题字）
+  \definecolor{huasorange}{HTML}{EB3D00}  % 校旗橙红（渐变亮端/alert 块）
+  \definecolor{huascoral}{HTML}{E06742}   % 珊瑚·建筑线稿色（短线/图注）
+  \definecolor{huasgold}{HTML}{F5B301}    % 校旗金（翻页按钮）
+  \definecolor{huascream}{HTML}{F7F2EC}   % 米白
+  \definecolor{huasbg}{HTML}{FDFAF3}      % ★调色★ 页面底色（暖米白，偏黄一点点；更白→FDFCF9，更黄→FBF5EA）
+\fi
+
+%% ================= 校本信息（★文字★）=================
+\newcommand{\huas@namecn}{湖南文理学院}                                % ★校名中文★
+\newcommand{\huas@nameen}{Hunan University of Arts and Science}       % ★校名英文★
+\newcommand{\huas@motto}{博学\quad 弘文\quad 明理\quad 求真}           % ★校训中文★
+\ifhuas@en
+  \renewcommand{\huas@motto}{Erudition\quad Humanism\quad Reason\quad Truth} % ★校训英文★
+\fi
+% 页码分隔符（默认 3 / 25；改 -- 则显示 3--25）
+\newcommand{\huas@frameofframes}{/}
+\newcommand{\setframeofframes}[1]{\renewcommand{\huas@frameofframes}{#1}}
+
+%% 封面信息扩展命令：导师行（可选，在 \author 后单独使用）
+\newcommand{\huas@supervisor}{}
+\newcommand{\supervisor}[1]{\renewcommand{\huas@supervisor}{#1}}
+
+%% 目录页背景：校门线稿水印（位置靠下；★尺寸★ width ★调色★ opacity ★位置★ yshift）
+\newcommand{\tocbackground}{%
+  \smash{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[opacity=0.12] at ([yshift=-2.6cm]current page.center) {%
+        \includegraphics[width=1.1\paperwidth]{building-gate.png}};
+    \end{tikzpicture}}}
+
+%% 汇报时间（显示在页脚深红行、汇报人名字之后）
+%% 默认 = \today（即编译 PDF 的日期）；如需固定日期：\reportdate{2025 年 6 月 10 日}
+\newcommand{\huas@reportdate}{\today}
+\newcommand{\reportdate}[1]{\renewcommand{\huas@reportdate}{#1}}
+
+%% 图片素材（★图片★）：默认取 figures/ 下文件，可整体换图
+\newcommand{\huas@logofile}{huas-logo-nobadge.png}     % 封面校标（无徽章版）
+\newcommand{\huassetlogo}[1]{\renewcommand{\huas@logofile}{#1}}
+\newcommand{\huas@badgefile}{huas-badge.png}          % 校徽
+\newcommand{\huassetbadge}[1]{\renewcommand{\huas@badgefile}{#1}}
+\newcommand{\huas@decofile}{building-gate.png}        % 封面装饰带线稿（浅底版）
+\newcommand{\huassetdeco}[1]{\renewcommand{\huas@decofile}{#1}}
+\newcommand{\huas@bgfile}{building-library.png}       % 封面背景水印（浅底版）
+\newcommand{\huassetbg}[1]{\renewcommand{\huas@bgfile}{#1}}
+
+%% 底部翻页控件：往前 / 往后（白色线条三角，极简风格）
+%% 用纯文本符号保证显示位置=点击热区，且垂直居中于页脚红条内
+%% ★调色★ white=箭头色；★尺寸★ \small=箭头大小；\hspace=两键间距
+\newcommand{\huas@navsymbols}{%
+  \hyperlinkslideprev{{\color{white}\small$\triangleleft$}}% 上一页
+  \hspace{0.35em}%
+  \hyperlinkslidenext{{\color{white}\small$\triangleright$}}% 下一页
+}
+
+%% 表格辅助宏（借鉴 HNU-Beamer）：彩色表头行
+%% 用法：\begin{tabular}{...} \huastableheader 列1 & 列2 \\ ... \end{tabular}
+\newcommand{\huastableheader}{\rowcolor{huasred!15}}
+\newcommand{\huastableheaderfont}{\bfseries\color{huasdeep}}
+
+%% ================= 色彩槽 =================
+\setbeamercolor{structure}{fg=huasred}
+% ★调色★ bg=所有页面底色（偏黄暖米）；行距在本文件末尾「行距与列表间距」区调整
+\setbeamercolor{normal text}{fg=black!85,bg=huasbg}
+\setbeamercolor{alerted text}{fg=huasorange}
+\setbeamercolor{example text}{fg=huasdeep}
+
+% 顶栏渐变条：深红 -> 校旗橙红（★调色★ bg）
+\setbeamercolor{section in head/foot}{fg=white,bg=huasdeep}
+\setbeamercolor{subsection in head/foot}{fg=white,bg=huasorange}
+\setbeamercolor{author in head/foot}{fg=white,bg=huasdeep}
+\setbeamercolor{title in head/foot}{fg=white,bg=huasdeep}
+\setbeamercolor{date in head/foot}{fg=white,bg=huasdeep}
+
+% 双行页脚（借鉴 thubeamer：上行作者/单位，下行标题/页码）（★调色★ bg）
+\setbeamercolor{firstbottomline}{fg=white,bg=huasdeep}
+\setbeamercolor{secondbottomline}{fg=white,bg=huasred}
+
+% 帧标题：暖底深红字（标题下无横线）（★调色★）
+\setbeamercolor{frametitle}{fg=huasdeep,bg=huasbg}
+% ★字号★ 中文版帧标题（左上角）\Large；英文版保持 \large
+\ifhuas@en
+  \setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\else
+  \setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\fi
+
+% 块环境（block / exampleblock / alertblock）（★调色★ 浅底=色 8% + 页面底色 92%）
+\setbeamercolor{block title}{fg=white,bg=huasred}
+\setbeamercolor{block body}{fg=black!85,bg=huasred!8!huasbg}
+\setbeamercolor{block title example}{fg=white,bg=huasdeep}
+\setbeamercolor{block body example}{fg=black!85,bg=huasdeep!8!huasbg}
+\setbeamercolor{block title alerted}{fg=white,bg=huasorange}
+\setbeamercolor{block body alerted}{fg=black!85,bg=huasorange!8!huasbg}
+
+% 列表符号与计数器（★调色★）
+\setbeamercolor{item}{fg=huasred}
+\setbeamercolor{item projected}{fg=white,bg=huasred}
+\setbeamercolor{subitem}{fg=huasdeep}
+\setbeamercolor{subsubitem}{fg=huascoral}
+\setbeamercolor{enumerate item}{fg=huasred}
+\setbeamercolor{enumerate subitem}{fg=huasdeep}
+\setbeamercolor{description item}{fg=huasred}
+\setbeamercolor{caption name}{fg=huasred}
+\setbeamercolor{bibliography entry author}{fg=black!85}
+\setbeamercolor{bibliography item}{fg=huasred}
+
+% 封面文字（★调色★）
+\setbeamercolor{title}{fg=huasdeep}
+\setbeamercolor{subtitle}{fg=huasred}
+\setbeamercolor{author}{fg=black!85}
+\setbeamercolor{institute}{fg=black!70}
+\setbeamercolor{date}{fg=black!70}
+
+\setbeamertemplate{navigation symbols}{} % 页面右下角默认控件已移至页脚
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+% 块样式可选圆角（借鉴 HNU）：取消注释启用
+% \setbeamertemplate{blocks}[rounded]
+
+%% ================= 外部主题（借鉴 thubeamer/NJIT：smoothbars 导航条）=================
+\useoutertheme[footline=authorinstitutetitle,subsection=false]{smoothbars}
+\useinnertheme{circles}
+
+%% ---- 双行页脚模板 ----
+%% ★尺寸★ ht/dp=行高行深，leftskip/rightskip=左右内边距
+%% 第二行右端为翻页控件 + 页码（[nonav] 可关闭控件）
+\setbeamertemplate{footline}{%
+  % ★文字★ 本行左侧=汇报人（读取 \author[短名]{...] 的方括号短名）+ 汇报时间（\reportdate）
+  %        右侧=单位（读取 \institute[短单位]{...} 的方括号短单位）
+  \begin{beamercolorbox}[ht=2.4ex,dp=1.05ex,leftskip=.35cm,rightskip=.35cm plus1fil]{firstbottomline}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+    \hspace{1.2em}{\usebeamerfont{date in head/foot}\huas@reportdate}% ★文字★ 汇报时间
+    \hfill
+    {\usebeamerfont{institute in head/foot}\insertshortinstitute}%
+  \end{beamercolorbox}%
+  % ★文字★ 本行左侧=标题（自动读取 \title[短标题]{...} 的方括号短标题；
+  %        \title{...} 不写方括号时显示完整标题）
+  \begin{beamercolorbox}[ht=2.6ex,dp=1.25ex,leftskip=.35cm,rightskip=.35cm]{secondbottomline}%
+    {\usebeamerfont{title in head/foot}\insertshorttitle}%
+    \hfill
+    \ifhuas@nav
+      {\usebeamercolor[fg]{page number in head/foot}%
+        \huas@navsymbols\hspace{0.6em}}% ★尺寸★ 控件与页码间距
+    \fi
+    {\usebeamerfont{page number in head/foot}%
+      \usebeamercolor[fg]{page number in head/foot}%
+      \insertframenumber~\huas@frameofframes~\inserttotalframenumber\hspace{0.1cm}}%
+  \end{beamercolorbox}%
+}
+\setbeamercolor{page number in head/foot}{fg=white}
+% 翻页控件配色（页脚深红底上的金圆按钮）（★调色★）
+\setbeamercolor{button}{fg=huasdeep,bg=huasgold}
+\setbeamercolor{button border}{fg=huasgold}
+
+%% ---- 帧标题：暖底深红字（无标题横线） ----
+%% ★尺寸★ vskip=标题上留白
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \vskip1.2ex
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=.45cm,rightskip=.45cm]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle
+    \ifx\insertframesubtitle\@empty\else
+      \\[0.2ex]{\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}%
+    \fi
+  \end{beamercolorbox}%
+  \vskip0.8ex
+}
+
+%% ================= 封面模板 =================
+%% 布局（借鉴 HNU-Beamer-Template）：
+%%   顶部色带 + 左上角校徽 + 中央校标与标题信息 + 底部单位/日期
+%%   + 底部色带（白色加粗英文校名）
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % 背景水印：图书馆线稿（★尺寸★ width ★调色★ opacity ★位置★ yshift）
+    \node[opacity=0.16] at ([yshift=-2.0cm]current page.center) {%
+      \includegraphics[width=1.16\paperwidth]{\huas@bgfile}};
+    % 顶部色带：主条 + 副条（★调色★ 暖=红/冷=蓝随主题；★尺寸★ 0.40/0.08cm）
+    \fill[huasdeep] (current page.north west) rectangle ([yshift=-0.40cm]current page.north east);
+    \fill[huasred!75] ([yshift=-0.40cm]current page.north west) rectangle ([yshift=-0.48cm]current page.north east);
+    % 左上角校徽（★图片★ huas-badge-v2 ★尺寸★ height=1.35cm）
+    \node[anchor=north west,inner sep=0] at ([xshift=1cm,yshift=-0.75cm]current page.north west)
+      {\includegraphics[height=1.35cm]{huas-badge-v2.png}};
+    % 底部色带（★调色★ huasdeep ★尺寸★ 0.48cm=带高）
+    \fill[huasdeep] (current page.south west) rectangle ([yshift=0.48cm]current page.south east);
+    % 底部色带中央：英文校名（加粗，中英文版均显示）
+    % ★字号★ font；★位置★ anchor=center + yshift=带高一半 → 严格垂直居中于色带内
+    \node[anchor=center,text=white,font=\small\bfseries] at ([yshift=0.24cm]current page.south)
+      {\huas@nameen};
+    % 单位与日期：置于页面底部、色带上方（★位置★ yshift=离底高度）
+    \node[anchor=south,text=black!70,font=\small,align=center] at ([yshift=0.75cm]current page.south)
+      {\insertinstitute\\[0.4ex]\insertdate};
+  \end{tikzpicture}%
+  \vfill
+  \begin{center}
+    % ★尺寸★ 0.44\paperwidth=校标宽度（无徽章版校标）
+    \includegraphics[width=0.44\paperwidth]{\huas@logofile}\\[2.2ex]
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+    \ifx\insertsubtitle\@empty\else
+      \vskip0.7ex
+      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+    \fi
+    \vskip1.6ex
+    {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}
+    \ifx\huas@supervisor\@empty\else % 导师行（使用 \supervisor{...} 时显示）
+      \vskip0.7ex
+      {\usebeamerfont{author}\usebeamercolor[fg]{author}\huas@supervisor\par}%
+    \fi
+  \end{center}
+  \vfill
+}
+
+%% ================= 节标题页 =================
+%% 深红->校旗橙红渐变 + 白色建筑线稿 + 金色细线（呼应 research 党政视觉）
+\setbeamertemplate{section page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % 渐变背景（★调色★ left/right color）
+    \shade[left color=huasdeep,right color=huasorange]
+      (current page.south west) rectangle (current page.north east);
+    % 白色线稿（深底用 -white 版素材）（★尺寸★ width ★调色★ opacity）
+    \node[anchor=south,opacity=0.16] at ([yshift=0.35cm]current page.south) {%
+      \includegraphics[width=1.04\paperwidth]{building-library-white.png}};
+  \end{tikzpicture}%
+  \vskip2.4cm % ★尺寸★ 标题上方留白
+  \begin{center}
+    % 第一行为编号（第 X 节 / Section X），第二行为节标题
+    % （结构借鉴 SJTUBeamer 的 section name + section title 两行式节页）
+    % 注：节页编号与标题保持宋体衬线（仅章节导航用黑体，见下方）
+    {\normalsize\bfseries\color{white!80}\ifhuas@en\else\songti\fi\hspace{0.15em}%
+      \ifhuas@en Section~\insertsectionnumber\else 第~\insertsectionnumber~节\fi\par}
+    \vskip1.0ex
+    {\usebeamerfont{section title}\color{white}\ifhuas@en\else\songti\fi\insertsection\par}
+  \end{center}
+  \vskip1.2cm % ★尺寸★ 标题下方留白
+  % 水平章节导航（借鉴 SJTUBeamer maxplus 节页）：列出各节、当前节高亮
+  % ★字体★ 中文版此处为黑体（全局 CJK 黑体），其余节页元素保持宋体衬线
+  % ★字号★ \scriptsize（英文节名较长，缩小避免溢出）
+  {\scriptsize\usebeamercolor[fg]{section in head/foot}%
+    \insertsectionnavigationhorizontal{\textwidth}{\hskip0pt plus1filll}{\hskip0pt plus1filll}}%
+  \vskip0.9cm % ★尺寸★ 导航距页底
+}
+\setbeamerfont{section title}{size=\LARGE,series=\bfseries} % ★字号★
+
+%% ================= 目录页 =================
+%% ★样式★ 目录条目：编号/三角符号/缩进（leftskip）；★行距★ vskip=条目间距
+%% ★字号★ 节前目录页条目较多（黑体行高较大），条目字号略收一档防止溢出
+\setbeamerfont{section in toc}{size=\small}
+\setbeamerfont{subsection in toc}{size=\footnotesize}
+% ★文字★ 中文数字编号（一、二、三…；英文版保持阿拉伯数字）
+\newcommand{\huas@cnnum}[1]{\ifcase#1\or 一\or 二\or 三\or 四\or 五\or 六\or 七\or 八\or 九\or 十\fi}
+% 高亮样式（参考《浅谈自读课文的教学》目录）：当前节与其小节高亮，其余灰色
+\setbeamercolor{section in toc shaded}{fg=black!35}
+\setbeamercolor{subsection in toc shaded}{fg=black!35}
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode\leftskip=2.2em{\color{huascoral}\raisebox{0.25ex}{\scriptsize$\blacktriangleright$}}\hspace{0.6em}\inserttocsubsection\par}
+\setbeamertemplate{section in toc}{%
+  {\color{huasred}\ifhuas@en\inserttocsectionnumber.\else\huas@cnnum{\inserttocsectionnumber}、\fi}%
+  \hspace{0.6em}\inserttocsection\par\vskip0.1ex}
+
+%% ================= 节前/小节前目录页（借鉴 thubeamer / NJIT）=================
+%% 高亮规则（参考 NJIT_LaTeX_Template）：当前节及其所有附属小节高亮；
+%% 其余节灰显，且不显示其余节的附属小节（subsectionstyle 尾参 hide）
+\ifhuas@sectiontoc
+  \AtBeginSection[]{%
+    \begin{frame}[plain,noframenumbering]\sectionpage\end{frame}%
+    \begin{frame}{\ifhuas@en Contents\else 目录\fi}
+      \tocbackground % 目录页背景：校门线稿
+      \vskip-1em % ★位置★ 目录整体上移
+      \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+    \end{frame}%
+  }
+\fi
+\ifhuas@subsectiontoc
+  \AtBeginSubsection[]{%
+    \begin{frame}{\ifhuas@en Contents\else 目录\fi}
+      \tocbackground % 目录页背景：校门线稿
+      \vskip-1em % ★位置★ 目录整体上移
+      \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+    \end{frame}%
+  }
+\fi
+
+%% ================= 定理类环境配色 =================
+\setbeamercolor{theorem name}{fg=white,bg=huasdeep}
+\setbeamercolor{theorem text}{fg=black!85}
+
+%% ================= 行距与列表间距（★行距★）=================
+%% 全局行距：1.08 = 比默认宽约 8%（改大更疏、改小更密）
+\linespread{1.08}\selectfont
+%% 列表项间距：0.45ex = 项与项之间的额外空隙
+\setbeamertemplate{itemize/enumerate body begin}{\setlength{\itemsep}{0.45ex}}
+\setbeamertemplate{itemize/enumerate subbody begin}{\setlength{\itemsep}{0.2ex}}
+%% 表格行距：1.25 = 表格行高倍率（改大行间更疏）
+\renewcommand{\arraystretch}{1.25}
+
+\mode<all>

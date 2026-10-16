@@ -1,0 +1,121 @@
+# ============================================================
+# HUAS-Beamer .gitignore
+# ============================================================
+
+# ===== LaTeX 核心辅助文件 =====
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.fmt
+*.fot
+*.cb
+*.cb2
+
+# ===== 中间文档 =====
+*.dvi
+*.xdv
+*-converted-to.*
+
+# ===== 参考文献辅助文件（bibtex/biblatex/biber）=====
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.brf
+*.run.xml
+
+# ===== 构建工具辅助文件 =====
+*.synctex
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# ===== 各宏包辅助文件 =====
+# algorithms
+*.alg
+*.loa
+# amsthm
+*.thm
+# beamer
+*.nav
+*.snm
+*.vrb
+# glossaries
+*.acn
+*.acr
+*.glg
+*.glo
+*.gls
+*.glsdefs
+# listings
+*.lol
+# makeidx
+*.idx
+*.ilg
+*.ind
+*.ist
+# minitoc
+*.maf
+*.mlf
+*.mlt
+*.mtc
+*.mtc[0-9]*
+# minted
+_minted*
+*.pyg
+# thmtools
+*.loe
+# TikZ & PGF
+*.dpth
+*.md5
+*.auxlock
+# todonotes
+*.tdo
+# xindy
+*.xdy
+# knitr
+*-concordance.tex
+*.tikz
+*-tikzDictionary
+
+# ===== 本项目特定 =====
+# 编译预览缩略图（审查用临时文件）
+template/preview/
+# 媒体大文件不入库（校歌等）
+*.mp3
+# 设计源文件/压缩包不入库
+*.ai
+*.zip
+*.rar
+
+# ===== 编辑器与系统 =====
+.vscode/
+**/.vscode/
+.idea/
+*.bak
+*.sav
+*.tmp
+*.swp
+*.swo
+.texpadtmp
+*.backup
+*~[0-9]*
+~$*
+.DS_Store
+**/.DS_Store
+._*
+Thumbs.db
+desktop.ini
+
+# ===== 嵌套仓库（examples/ 为 vendored 参考代码，不含历史）=====
+examples/*/.git/
+
+# ===== 第三方参考模板与调研素材（仅保留在本地，不提交不上传）=====
+examples/
+research/

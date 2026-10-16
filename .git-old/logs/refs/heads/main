@@ -1,0 +1,7 @@
+0000000000000000000000000000000000000000 2e1bb9743f5e5bbfdb62b2e99d5f5c882d80ee78 bsxiaocai <bsxiaocai@gmail.com> 1792172253 +0800	commit (initial): 初始提交：HUAS-Beamer 湖南文理学院 LaTeX Beamer 模板
+2e1bb9743f5e5bbfdb62b2e99d5f5c882d80ee78 2e1bb9743f5e5bbfdb62b2e99d5f5c882d80ee78 bsxiaocai <bsxiaocai@gmail.com> 1792172730 +0800	Branch: renamed refs/heads/main to refs/heads/main
+2e1bb9743f5e5bbfdb62b2e99d5f5c882d80ee78 066a04f626d72300ae3df4c45ecb733cb314ac81 bsxiaocai <bsxiaocai@gmail.com> 1792173373 +0800	commit (amend): 初始提交：HUAS-Beamer 湖南文理学院 LaTeX Beamer 模板
+066a04f626d72300ae3df4c45ecb733cb314ac81 c35c38315f4f6e54a48add1e6fa99c84016d664e bsxiaocai <bsxiaocai@gmail.com> 1792173385 +0800	commit (amend): 初始提交：HUAS-Beamer 湖南文理学院 LaTeX Beamer 模板
+c35c38315f4f6e54a48add1e6fa99c84016d664e 3c4d94f4c13b857a6c5afe4ae165fab5f94f5c5d bsxiaocai <bsxiaocai@gmail.com> 1792173714 +0800	commit: docs: 新增《LaTeX与Beamer从零教程》（LaTeX→Beamer→模板实战）
+3c4d94f4c13b857a6c5afe4ae165fab5f94f5c5d e2bfb09ddf93b861f52f12e688be060a3cc5cce3 bsxiaocai <bsxiaocai@gmail.com> 1792174111 +0800	commit (merge): merge: 合并远程仓库历史
+e2bfb09ddf93b861f52f12e688be060a3cc5cce3 1dc51d7613b27757c45f173691f55c302e4edef4 bsxiaocai <bsxiaocai@gmail.com> 1792174289 +0800	commit: chore: stop tracking examples and research
