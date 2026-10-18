@@ -20,7 +20,7 @@ template/
 ## 编译方法
 
 中英文四版均须使用 **XeLaTeX**，不能使用 pdfLaTeX。当前源码在 Windows / TeX Live 2026 下
-完成四版编译验证（中文各 25 个 PDF 页面，英文各 24 个；页数随内容和分步显示变化）。
+完成四版编译验证（四版各 28 个 PDF 页面，结构一致；页数随内容和分步显示变化）。
 
 先切换到 `template/` 目录。推荐使用本目录 `.latexmkrc`：
 
@@ -95,6 +95,7 @@ VS Code 配方和高亮排错见[项目主页](../README.md#vs-code-配置与排
 | `\huassetlogo{...}` | 替换封面校标图片 |
 | 封面校徽 | 在 `huasbeamer.sty` 的 `title page` 中搜索并替换 `huas-badge-v2.png` |
 | `\tocbackground` | 目录页背景线稿（可改/可删） |
+| 目录条目圆圈/字号 | 在 `huasbeamer.sty` 搜索 `ball color`（圆圈颜色与大小）/ `section in toc`（字号） |
 | `\huastableheader` | 表格彩色表头行（配套 `\huastableheaderfont`） |
 | `\setframeofframes{--}` | 修改页码分隔符（默认 `/`） |
 
@@ -107,8 +108,8 @@ VS Code 配方和高亮排错见[项目主页](../README.md#vs-code-配置与排
 ## 编译要求
 
 - XeLaTeX、BibTeX；使用自动构建时还需 latexmk 及其 Perl 运行环境。
-- 主题依赖 beamer、fontspec、xeCJK、ctex（中文模式）、tikz、amsmath、amssymb、amsthm、
-  booktabs、colortbl、newtxmath；示例另外加载 listings、multicol、multirow。
+- 主题依赖 beamer、fontspec、xeCJK、ctex（中文模式）、tikz（含 shadings 库，目录圆圈用）、
+  amsmath、amssymb、amsthm、booktabs、colortbl、newtxmath；示例另外加载 listings、multicol、multirow。
 - 中文字体显式使用 Fandol（随 TeX Live 提供）；中文正文为黑体、斜体用楷体、节页标题为宋体。
 - 西文主字体优先使用 Times New Roman，字体不存在时回退 TeX Gyre Termes；数学使用 newtxmath。
 - 更换字体需修改 `\setCJKmainfont` 等对应命令，不能只改 ctex 的 `fontset`，

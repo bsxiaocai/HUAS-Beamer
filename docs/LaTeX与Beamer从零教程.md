@@ -310,17 +310,17 @@ pdfLaTeX 处理中文很麻烦，**用 XeLaTeX + ctex 宏包**（本模板已内
 
 ```latex
 如式 \ref{eq:mean} 所示……           % 引用编号
-前人研究表明……\cite{wang2019}。      % 引用文献
+前人研究表明……\cite{zhang2023}。    % 引用文献
 ```
 
-文献条目写在 `reference.bib`：
+文献条目写在 `reference.bib`（模板自带 5 条中性示例，条目 key 见该文件）：
 
 ```bibtex
-@article{wang2019,
-  author  = {王某},
-  title   = {自读课文教学研究},
-  journal = {语文建设},
-  year    = {2019},
+@article{zhang2023,
+  author  = {Zhang Wei and Li Ming},
+  title   = {A Comparative Study of Deep Learning Methods for Tabular Data},
+  journal = {Journal of Data Science and Applications},
+  year    = {2023},
 }
 ```
 
@@ -655,7 +655,7 @@ xelatex 我的答辩.tex     # 第二遍，装饰位置归位
 
 **自动机制**（HUAS-Beamer 的核心体验）：
 
-- 每个 `\section` **之前自动插入**「渐变节页（编号+标题+章节导航）」+「目录页」；
+- 每个 `\section` **之前自动插入**「渐变节页（编号+标题，整体偏上）」+「目录页」；
 - 节前目录页里：**当前节及其小节高亮**，其余节灰显且不显示其小节（NJIT 规则）；
 - 页脚、顶部导航条自动读取章/节名。
 
@@ -680,8 +680,8 @@ xelatex 我的答辩.tex     # 第二遍，装饰位置归位
 \end{frame}
 ```
 
-目录编号是中文数字「一、二、三、」（英文版自动变「1.」），
-想换样式搜索样式文件里的 `\huas@cnnum`。
+目录节条目是「立体圆圈 + 中文数字『一、二、三、』」（英文版自动变阿拉伯数字），
+圆圈颜色与字号搜索样式文件里的 `ball color` / `section in toc`；汉字数字定义搜 `\huas@cnnum`。
 
 ## 第 15 章　主题选项（对应自定义说明 §2）
 
@@ -770,7 +770,7 @@ print(data["score"].mean())
 ### 16.5 参考文献
 
 1. 文献条目写进 `reference.bib`（格式见 §5.7）；
-2. 正文引用 `\cite{wang2019}`；
+2. 正文引用 `\cite{zhang2023}`；
 3. 文末帧：
 
 ```latex
@@ -849,7 +849,8 @@ print(data["score"].mean())
 | 封面校徽 | `huas-badge-v2` | 高 1.35cm |
 | 页脚两行 | `footline` | 见 §13.2 |
 | 帧标题字号 | `★字号★ 中文版帧标题` | 中文 `\Large` |
-| 节页布局 | `section page` | 编号+标题+横向导航 |
+| 节页布局 | `section page` | 编号+标题（无横向导航，整体偏上） |
+| 目录条目圆圈/字号 | `ball color` / `section in toc` | 圆圈内汉字数字、节 `\Large` |
 | 目录背景 | `\tocbackground` | 校门线稿 |
 
 ### 17.4 图片素材（自定义说明 §5）
@@ -957,7 +958,7 @@ Day 4  彩排
 | 中文编译报错 | 中英文均用 `xelatex`，检查首个错误及字体/宏包是否齐全；`[en]` 负责英文界面 |
 | 中文字体缺失 | 检查 Fandol 安装；显式更换字体命令的方法见 §17.6 |
 | 节前目录页太多 | `[notoc]` 关闭节前节页和目录；小节目录需移除 `[subsectiontoc]` |
-| 目录条目溢出页脚 | 目录字号改 `\footnotesize`（自定义说明 §4.6） |
+| 目录条目溢出页脚 | 按自定义说明 §4.6 收字号与 `\huas@tocitemskip` 条目间距 |
 | PDF 无法覆盖编译 | 关闭正在预览的阅读器 |
 | 页面底色想调 | `\definecolor{huasbg}{HTML}{...}`（§17.2） |
 | 想要英文幻灯片 | 使用 `[en]` 或 `-EN.tex` 版本，并自行将正文和文献改为英文，选项不负责翻译 |

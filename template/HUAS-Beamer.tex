@@ -2,7 +2,15 @@
 %%=======================================================================
 %% HUAS-Beamer.tex —— 湖南文理学院 Beamer 模板中文演示（暖色调，兼使用示例）
 %%=======================================================================
-%% 编译：xelatex HUAS-Beamer.tex（含参考文献需 xelatex → bibtex → xelatex ×2）
+%% 编译：latexmk -xelatex HUAS-Beamer.tex（自动处理 bibtex）
+%%   或 xelatex HUAS-Beamer.tex（含参考文献需 xelatex → bibtex → xelatex ×2）
+%%
+%% ★ 本演示的组织方式 ★
+%%   中性学术汇报 / 模板演示叙事：每页集中展示一类版式元素（列表 / 分栏 /
+%%   图文 / 块 / 定理 / 公式 / 表格 / 代码 / 引用 / 超链接 …），
+%%   示例素材整合自常用模板示例（研究内容与进度、研究工作与成果、
+%%   后期工作与安排、问题与解决方案等通用学术汇报语境）；
+%%   写自己的内容时可整页替换示例文字。
 %%
 %% ★ 如何改成你自己的 PPT ★
 %%   1. 封面信息：修改下方 \title / \subtitle / \author / \supervisor /
@@ -11,8 +19,6 @@
 %%      \begin{frame}{标题}...\end{frame}=一页幻灯片
 %%   3. 颜色/尺寸/图片/字体调整：见 huasbeamer.sty 中「★调色★/★尺寸★」注释，
 %%      或 docs/模板使用与自定义说明.md
-%%   4. 本页所有内容均为排版范例（列表/公式/表格/图文/代码/参考文献等），
-%%      写自己的内容时可整段替换
 %%=======================================================================
 \documentclass[aspectratio=169]{beamer} % 16:9；4:3 改为去掉 aspectratio
 
@@ -42,12 +48,13 @@
 }
 
 %% ---------------- 封面信息（★内容填写★）----------------
-\title[自读课文的教学]{浅谈自读课文的教学}       % [页脚短标题]{封面标题}
-\subtitle{——以部编版八年级下册第二、四单元为例}  % 副标题（可删）
-\author[张同学]{答辩人：张同学}                   % [页脚短作者]{封面作者}
-\supervisor{指导教师：李老师\quad 教授}            % 导师行（可删整行）
+\title[HUAS-Beamer 模板演示]{HUAS-Beamer 模板演示}   % [页脚短标题]{封面标题}
+\subtitle{——学术汇报版式元素总览}                    % 副标题（可删）
+\author[张同学]{汇报人：张同学}                       % [页脚短作者]{封面作者}
+\supervisor{指导教师：李老师\quad 教授}                % 导师行（可删整行）
 \institute[湖南文理学院]{\small 湖南文理学院·文学院}
 \date{\small 2025 年 6 月}
+\reportdate{2025 年 6 月}                     % 页脚汇报时间（不设置则显示编译日期 \today）
 
 \begin{document}
 
@@ -62,220 +69,362 @@
   \vskip-2em % ★位置★ 总目录整体上移
   {\setbeamerfont{section in toc}{size=\large}% ★字号★ 总目录条目加大
    \tableofcontents[hideallsubsections]}
+  \vskip0.5ex
+  {\footnotesize\color{huasdeep}%
+    导读：本演示每页展示一类版式元素，示例文字取自通用学术汇报语境。}
 \end{frame}
 
-%% ==================== 一、研究背景与意义 ====================
-\section{研究背景与意义}
+%% ==================== 一、文本与列表 ====================
+\section{文本与列表}
 
-\subsection{研究背景}
+\subsection{多级列表}
 
-\begin{frame}{研究背景}
-  \begin{block}{政策背景}
-    \begin{itemize}
-      \item 部编本语文教材构建了「教读—自读—课外阅读」三位一体阅读体系；
-      \item 自读课文承担着从「教师引导」向「学生自主阅读」过渡的关键功能；
-      \item 课程标准强调培养学生的独立阅读能力与阅读兴趣。
-    \end{itemize}
-  \end{block}
-  \begin{alertblock}{现实困境}
-    \begin{itemize}
-      \item 自读课文教学「教读化」：逐段精讲、面面俱到；
-      \item 学生主体地位缺失，阅读策略迁移不足。
-    \end{itemize}
-  \end{alertblock}
+\begin{frame}{多级列表：itemize 与 enumerate}
+  \begin{itemize}
+    \item 课题主要研究内容
+      \begin{itemize}
+        \item 数据采集与预处理：构建实验数据集；
+        \item 模型设计与训练：对比三种基线方法
+          \begin{itemize}
+            \item 特征提取与超参数设置；
+            \item 训练、验证与消融实验。
+          \end{itemize}
+        \item 结果分析与研究报告撰写。
+      \end{itemize}
+    \item \alert{重点}：阶段成果梳理与进度管理。
+  \end{itemize}
+  \vskip1.2ex
+  \small
+  \begin{enumerate}
+    \item 第一阶段：文献调研与方案论证；
+    \item 第二阶段：系统实现与实验验证
+      \begin{enumerate}
+        \item 完成模块开发与单元测试；
+        \item 整理实验数据与阶段总结。
+      \end{enumerate}
+  \end{enumerate}
 \end{frame}
 
-\subsection{研究意义}
+\subsection{描述与强调}
 
-\begin{frame}{研究意义}
+\begin{frame}{描述列表与文字强调}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \small
+      \begin{description}
+        \item[调研] 文献综述与需求分析；
+        \item[建模] 模型构建与参数估计；
+        \item[实验] 对比实验与结果分析；
+        \item[评估] 指标统计与误差分析；
+        \item[总结] 结论凝练与成果整理。
+      \end{description}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \small
+      强调方式示例：
+      \begin{itemize}
+        \item \alert{\textbf{alert 加粗}}：醒目提示；
+        \item \textbf{加粗}：突出关键词；
+        \item \emph{着重}：标记术语概念；
+        \item {\color{huasdeep}主题深色}：呼应整体配色。
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vskip1ex
+  {\footnotesize 注：本页示例文字仅用于版式演示，%
+    写自己的内容时可整页替换\footnote{脚注示例：脚注自动排在页面底部，并沿用主题配色。}。}
+\end{frame}
+
+%% ==================== 二、版式与图文 ====================
+\section{版式与图文}
+
+\subsection{分栏排版}
+
+\begin{frame}{分栏排版：两栏与三栏}
   \begin{columns}[T]
     \begin{column}{0.48\textwidth}
-      \begin{exampleblock}{理论意义}
-        \begin{itemize}
-          \item 丰富自读课文教学的理论研究；
-          \item 为「三位一体」阅读体系提供实践注脚。
+      \begin{exampleblock}{已完成的研究工作}
+        \begin{itemize}\small
+          \item 完成数据集构建与基线方法复现；
+          \item 完成对比实验与初步分析。
         \end{itemize}
       \end{exampleblock}
     \end{column}
     \begin{column}{0.48\textwidth}
-      \begin{exampleblock}{实践意义}
-        \begin{itemize}
-          \item 为一线教师提供可操作的教学策略；
-          \item 促进学生阅读能力的自主建构。
+      \begin{exampleblock}{后期工作与安排}
+        \begin{itemize}\small
+          \item 补充消融实验与误差分析；
+          \item 完善系统原型并撰写论文。
         \end{itemize}
       \end{exampleblock}
     \end{column}
   \end{columns}
-  \vskip1ex
-  {\footnotesize\color{huasdeep}%
-    引自《义务教育语文课程标准（2022 年版）》\cite{xkb2022}。}
-\end{frame}
-
-%% ==================== 二、研究内容与方法 ====================
-\section{研究内容与方法}
-
-\subsection{研究内容}
-
-\begin{frame}{研究内容}
-  \begin{itemize}[<+-| alert@+>]
-    \item 梳理部编版八年级下册第二、四单元自读课文的编排特点；
-    \item 调查当前自读课文教学的现状与问题；
-    \item 提出自读课文教学的基本原则与实施策略；
-    \item 结合具体课例进行教学设计与实践反思。
-  \end{itemize}
   \vskip1.5ex
-  \begin{block}{核心概念}
-    自读课文：以学生自主阅读为主、教师点拨为辅，强调阅读方法迁移的课文类型
-    \cite{wang2019}。
-  \end{block}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}\small
+      \textbf{问题定位}\\ 小样本场景下基线模型欠拟合。
+    \end{column}
+    \begin{column}{0.32\textwidth}\small
+      \textbf{方案设计}\\ 引入数据增强与正则化策略。
+    \end{column}
+    \begin{column}{0.32\textwidth}\small
+      \textbf{验证评估}\\ 交叉验证并做显著性检验。
+    \end{column}
+  \end{columns}
 \end{frame}
 
-\subsection{研究方法}
+\subsection{图文混排}
 
-\begin{frame}{研究方法}
+\begin{frame}{图文混排与图注}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{building-library.png}
+        \caption{校园建筑线稿素材}\label{fig:library}
+      \end{figure}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \small
+      \begin{itemize}
+        \item 图注自动编号，编号与「图」字样以主题色显示；
+        \item 插图与正文分栏混排，图文比例自由；
+        \item 素材统一存放于 \texttt{figures/} 目录；
+        \item 正文可交叉引用：如图~\ref{fig:library} 所示。
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{并排插图}
+
+\begin{frame}{并排插图与交叉引用}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{building-gate.png}
+        \caption{并排插图一（建筑线稿）}\label{fig:gate}
+      \end{figure}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{huas-badge.png}
+        \caption{并排插图二（校徽素材）}\label{fig:badge}
+      \end{figure}
+    \end{column}
+  \end{columns}
+  \vskip1ex
+  {\small 图~\ref{fig:gate} 与图~\ref{fig:badge} 为同一行并排插图；
+    交叉引用编号随图表增删自动更新，\alert{\textbf{无需手工维护}}。}
+\end{frame}
+
+%% ==================== 三、块、定理与公式 ====================
+\section{块、定理与公式}
+
+\subsection{块环境}
+
+\begin{frame}{块环境三兄弟}
+  \begin{block}{研究工作总结（block）}
+    完成实验数据集构建、三种基线方法复现与对比实验设计，形成阶段报告一份。
+  \end{block}
+  \begin{exampleblock}{实验结果示例（exampleblock）}
+    在公开数据集上，所提方法的准确率较最优基线提升 3.2 个百分点。
+  \end{exampleblock}
+  \begin{alertblock}{风险与对策（alertblock）}
+    实验周期紧张：预留两周缓冲时间；若数据不足，改用公开基准数据集。
+  \end{alertblock}
+\end{frame}
+
+\subsection{定理与证明}
+
+\begin{frame}{定理、证明与例题}
+  \begin{theorem}[勾股定理]
+    在直角三角形中，两条直角边的平方和等于斜边的平方。
+  \end{theorem}
+  \begin{proof}
+    设两直角边长为 $a,b$，斜边长为 $c$。取四个全等直角三角形拼成边长
+    $a+b$ 的正方形，比较两种剖分的面积即得 $a^2+b^2=c^2$。
+  \end{proof}
+  \begin{example}
+    当 $a=3$，$b=4$ 时，$c=\sqrt{a^2+b^2}=5$。
+  \end{example}
+\end{frame}
+
+\subsection{公式排版}
+
+\begin{frame}{行内与行间公式}
+  \small
+  行内公式：目标函数记为 $J(\theta)$，学习率取 $\alpha=0.05$，样本量 $n=320$。
+  \[ k:[-\pi,\pi]\rightarrow[0,1] \]
+  编号公式：网络输入为图像张量
+  \begin{equation}
+    \mathbf{x}\in\mathbb{R}^{C_{\text{in}}\times H\times W}
+    \label{eq:input}
+  \end{equation}
+  其中 $C_{\text{in}}$ 表示通道数，$H$ 表示图像高度，$W$ 表示图像宽度；
+  由式~\eqref{eq:input} 可确定各层张量形状。
+\end{frame}
+
+\begin{frame}{多行公式与分段函数}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \small 多行对齐（align）：
+      \begin{align}
+        Q_{\text{target}} &= r+\gamma\,Q^{\pi}(s',\pi_\theta(s'))+\epsilon,\\
+        \epsilon &\sim \mathrm{clip}\bigl(\mathcal{N}(0,\sigma),-c,c\bigr).
+      \end{align}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \small 分段函数（cases）：
+      \[ L(e)=\begin{cases}
+        e^{2}, & |e|\le 1;\\
+        2|e|-1, & |e|>1.
+      \end{cases} \]
+    \end{column}
+  \end{columns}
+  \vskip1ex
+  {\small 其中 $r$ 为即时奖励，$\gamma$ 为折扣因子，$Q^{\pi}$ 为动作价值函数；
+    $L(e)$ 为鲁棒损失，随误差 $e$ 分段变化。}
+\end{frame}
+
+%% ==================== 四、表格、代码与总结 ====================
+\section{表格、代码与总结}
+
+\subsection{表格与代码}
+
+\begin{frame}{表格与彩色表头}
   \begin{table}
     \centering\small
-    \caption{研究方法一览}\label{tab:method}
-    \begin{tabular}{lll}
+    \caption{数据集各列非重复元素个数示例}\label{tab:unique}
+    \begin{tabular}{lc}
       \huastableheader % 彩色表头行（huasbeamer 提供的 \huastableheader 宏）
-      \huastableheaderfont 方法 & \huastableheaderfont 对象/样本 & \huastableheaderfont 目的 \\
+      \huastableheaderfont 字段 & \huastableheaderfont 非重复值个数 \\
       \midrule
-      文献研究法 & 期刊论文 42 篇 & 梳理研究现状 \\
-      问卷调查法 & 师生样本 320 份 & 把握教学现状 \\
-      课堂观察法 & 课例 12 个 & 分析教学行为 \\
-      案例分析法 & 教学设计 6 例 & 提炼实施策略 \\
+      \texttt{posting\_id} & 34250 \\
+      \texttt{image} & 32412 \\
+      \texttt{image\_phash} & 28735 \\
+      \texttt{title} & 33117 \\
+      \texttt{label\_group} & 11014 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \vskip1ex
+  {\small 表~\ref{tab:unique} 采用 \texttt{booktabs} 三线表与
+    \texttt{\textbackslash huastableheader} 彩色表头行；
+    表格行距由模板统一设置，\texttt{multirow}/\texttt{multicolumn} 可合并单元格。}
+\end{frame}
+
+\begin{frame}[fragile]{代码排版：listings}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+\begin{lstlisting}[language=TeX]
+\begin{itemize}
+  \item 数据采集与预处理
+  \item 模型设计与训练
+  \begin{itemize}
+    \item 特征提取与超参数设置
+  \end{itemize}
+\end{itemize}
+\end{lstlisting}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \small
+      排版结果：
+      \begin{itemize}
+        \item 数据采集与预处理
+        \item 模型设计与训练
+        \begin{itemize}
+          \item 特征提取与超参数设置
+        \end{itemize}
+      \end{itemize}
+      \vskip0.8ex
+      {\footnotesize 代码区关键字、注释、字符串分别着色，左侧行号，%
+        超长行自动换行（\texttt{breaklines}）。}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{引用与导航}
+
+\begin{frame}{文献引用与脚注}
+  \begin{block}{引用示例}
+    \begin{itemize}
+      \item 单篇引用：数据驱动方法综述\cite{zhang2023}；
+      \item 多篇引用：训练方法与排版工具\cite{chen2022,li2020}；
+      \item 引用常与脚注配合，标注数据来源与补充说明\cite{wang2021,gao2024}。
+    \end{itemize}
+  \end{block}
+  \begin{exampleblock}{引文与脚注}
+    \begin{quote}\small
+      「工欲善其事，必先利其器。」%
+      \footnote{引文示例：脚注自动置于页面底部。}
+    \end{quote}
+  \end{exampleblock}
+  {\small 参考文献以 \texttt{bib\LaTeX} 管理、正文自动编号；
+    完整条目见「参考文献」页（\texttt{allowframebreaks} 可自动分页）。}
+\end{frame}
+
+\begin{frame}{超链接与页面导航}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \small
+      \begin{description}
+        \item[\texttt{url}] \url{https://www.huas.cn/}
+        \item[\texttt{href}] \href{https://www.huas.cn/}{湖南文理学院主页}
+        \item[\texttt{jump}] \hyperlink{frame:gallery}{跳转到「版式元素总览」}
+      \end{description}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \small
+      \begin{itemize}
+        \item 交叉引用：图~\ref{fig:library}、表~\ref{tab:unique}、%
+          式~\eqref{eq:input}；
+        \item 页脚右下角为翻页控件与页码；
+        \item 目录节条目、参考文献条目均可点击跳转。
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{总结与展望}
+
+\begin{frame}{版式元素总览}
+  \hypertarget{frame:gallery}{}
+  \begin{table}
+    \centering\scriptsize
+    \caption{本演示覆盖的版式元素}\label{tab:gallery}
+    \begin{tabular}{lll}
+      \huastableheader
+      \huastableheaderfont 类别 & \huastableheaderfont 环境/命令 &
+      \huastableheaderfont 示例页 \\
+      \midrule
+      列表 & itemize / enumerate / description & 多级列表、描述列表 \\
+      版式 & columns / figure / caption & 分栏、图文混排 \\
+      块 & block / exampleblock / alertblock & 块环境三兄弟 \\
+      定理 & theorem / proof / example & 定理与证明 \\
+      数学 & equation / align / cases & 行内、行间与多行公式 \\
+      表格 & tabular + huastableheader & 彩色表头三线表 \\
+      代码 & lstlisting & 代码排版 \\
+      引用 & cite / footnote / hyperlink & 引用、脚注与导航 \\
       \bottomrule
     \end{tabular}
   \end{table}
 \end{frame}
 
-\subsection{单元选文概况}
-
-\begin{frame}{单元选文概况}
-  \begin{columns}[T]
-    \begin{column}{0.55\textwidth}
-      \begin{table}
-        \centering\small
-        \caption{第二、四单元选文分布}\label{tab:unit}
-        \begin{tabular}{lccc}
-          \huastableheader
-          \huastableheaderfont 单元 & \huastableheaderfont 课文总数 &
-          \huastableheaderfont 自读篇目 & \huastableheaderfont 占比 \\
-          \midrule
-          第二单元 & 5 & 2 & 40\% \\
-          第四单元 & 5 & 2 & 40\% \\
-          \midrule
-          合计 & 10 & 4 & 40\% \\
-          \bottomrule
-        \end{tabular}
-      \end{table}
-    \end{column}
-    \begin{column}{0.42\textwidth}
-      \begin{center}
-        \includegraphics[width=0.42\textwidth]{huas-badge.png}
-      \end{center}
-      {\footnotesize\color{huasdeep}湖南文理学院}\\[0.5ex]
-      {\scriptsize 自读篇目如《大自然的语言》《大雁归来》等，\\
-        以说明性、议论性文本为主，突出方法迁移。}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\subsection{数据处理示例}
-
-\begin{frame}[fragile]{数据处理示例}
-  \vspace{-1.2ex}
-  \begin{block}{问卷数据统计（节选）}
-    以班级为单位统计阅读自我效能感得分均值（$n=320$）：
-    \begin{equation}
-      \bar{X} = \frac{1}{n}\sum_{i=1}^{n} x_i,
-      \qquad
-      S = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{X})^2}
-      \label{eq:mean}
-    \end{equation}
-    实验前后差异采用配对 $t$ 检验\cite{li2021}。
-  \end{block}
-  \vspace{-0.8ex}
-  \begin{exampleblock}{分析脚本（节选）}
-\begin{lstlisting}[language=Python]
-import pandas as pd
-data = pd.read_excel("reading_survey.xlsx")
-mean, std = data["score"].mean(), data["score"].std()
-print(f"mean = {mean:.2f}, std = {std:.2f}")
-\end{lstlisting}
-  \end{exampleblock}
-\end{frame}
-
-%% ==================== 三、教学策略与实践 ====================
-\section{教学策略与实践}
-
-\subsection{教学原则}
-
-\begin{frame}{自读课文教学的基本原则}
-  \begin{enumerate}
-    \item \textbf{学生主体原则}——把课堂时间还给学生阅读；
-    \item \textbf{方法迁移原则}——将教读课习得的策略迁移至自读课；
-    \item \textbf{以评促读原则}——用阅读任务单、读书报告等评价驱动阅读；
-    \item \textbf{整合拓展原则}——打通课内自读与课外整本书阅读。
-  \end{enumerate}
-  \vskip2ex
-  \begin{block}{「旁批」的支架作用}
-    自读课文的旁批为学生提供了思维支架，教学中应引导学生\emph{借助旁批
-      学会提问}，逐步走向独立阅读。
-  \end{block}
-\end{frame}
-
-\subsection{教学设计示例}
-
-\begin{frame}{教学设计示例：《大雁归来》}
-  \begin{columns}[T]
-    \begin{column}{0.52\textwidth}
-      \includegraphics[width=\textwidth]{building-library.png}\\[0.5ex]
-      {\scriptsize\color{huascoral}图：湖南文理学院图书馆（素材示意）}
-    \end{column}
-    \begin{column}{0.44\textwidth}
-      \small
-      \begin{description}
-        \item[导入] 候鸟迁徙短视频引入；
-        \item[自读] 借助旁批完成任务单；
-        \item[交流] 小组汇报、质疑答辩；
-        \item[迁移] 比较阅读《大自然的语言》；
-        \item[作业] 撰写 300 字观察笔记。
-      \end{description}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-\subsection{实践效果}
-
-\begin{frame}{实践效果}
-  \begin{block}{课堂观察结论}
+\begin{frame}{结语与使用建议}
+  \begin{block}{模板效果}
     \begin{itemize}
-      \item 学生自主阅读时长由 8 分钟提升至 18 分钟；
-      \item 课堂提问中「学生主动提问」占比由 21\% 提升至 57\%；
-      \item 阅读策略迁移任务完成率提升 32\%。
+      \item 色彩、字体、页眉页脚与装饰元素全篇统一；
+      \item 常用版式元素均已配色，开箱即用、无需额外调参。
     \end{itemize}
   \end{block}
-  \begin{alertblock}{需要注意}
-    自读不等于「放手」，教师的点拨与反馈仍是质量保障的关键环节。
-  \end{alertblock}
-\end{frame}
-
-%% ==================== 四、总结与展望 ====================
-\section{总结与展望}
-
-\begin{frame}{结论与展望}
-  \begin{block}{研究结论}
+  \begin{exampleblock}{使用建议}
     \begin{itemize}
-      \item 自读课文教学应回归学生自主阅读的本位；
-      \item 任务单 + 旁批支架 + 比较阅读是行之有效的策略组合；
-      \item 「教读—自读—课外阅读」的一体化设计值得深入探索。
-    \end{itemize}
-  \end{block}
-  \begin{exampleblock}{后续工作}
-    \begin{itemize}
-      \item 扩大样本，开展准实验研究；
-      \item 探索信息技术支持下的自读课堂评价。
+      \item 先写内容、再套版式，本演示任一页均可整页复制改写；
+      \item 需要微调时，检索 \texttt{huasbeamer.sty} 中的星标注释；
+      \item 冷色调（蓝白）版本仅需改主题选项为 \texttt{blue}。
     \end{itemize}
   \end{exampleblock}
 \end{frame}

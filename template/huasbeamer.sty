@@ -55,6 +55,7 @@
 
 %% ================= 宏包 =================
 \RequirePackage{tikz}
+\usetikzlibrary{shadings} % 球形渐变（目录节条目圆圈 ball 渲染）
 \RequirePackage{graphicx}
 \RequirePackage{amsmath,amssymb,amsthm}
 \RequirePackage{booktabs}
@@ -308,10 +309,16 @@
     \node[anchor=south,text=black!70,font=\small,align=center] at ([yshift=0.75cm]current page.south)
       {\insertinstitute\\[0.4ex]\insertdate};
   \end{tikzpicture}%
-  \vfill
+  % ★位置★ 顶部留白 −0.5cm + 0.1fill：负值即主体（书法校标+标题信息）整体上移量，可调；
+  %        底部单位/日期为独立锚定节点（见上方 yshift=0.75cm），不随之移动
+  \vskip-0.5cm plus0.1fill
   \begin{center}
     % ★尺寸★ 0.44\paperwidth=校标宽度（无徽章版校标）
-    \includegraphics[width=0.44\paperwidth]{\huas@logofile}\\[2.2ex]
+    % ★尺寸★ \vskip=书法艺术字与主标题的间隙（≈1.5 倍行距观感，规范值见 docs/文档规范建议.md）；
+    %        \nointerlineskip 关闭默认行距，间隙完全由 \vskip 显式控制
+    \includegraphics[width=0.44\paperwidth]{\huas@logofile}\par
+    \nointerlineskip
+    \vskip1.2ex
     {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
     \ifx\insertsubtitle\@empty\else
       \vskip0.7ex
@@ -338,41 +345,45 @@
     \node[anchor=south,opacity=0.16] at ([yshift=0.35cm]current page.south) {%
       \includegraphics[width=1.04\paperwidth]{building-library-white.png}};
   \end{tikzpicture}%
-  \vskip2.4cm % ★尺寸★ 标题上方留白
+  \vskip2.0cm % ★尺寸★ 标题上方留白（小于下方留白 → 编号+标题整体上移）
   \begin{center}
     % 第一行为编号（第 X 节 / Section X），第二行为节标题
     % （结构借鉴 SJTUBeamer 的 section name + section title 两行式节页）
-    % 注：节页编号与标题保持宋体衬线（仅章节导航用黑体，见下方）
+    % 注：节页编号与标题保持宋体衬线
     {\normalsize\bfseries\color{white!80}\ifhuas@en\else\songti\fi\hspace{0.15em}%
       \ifhuas@en Section~\insertsectionnumber\else 第~\insertsectionnumber~节\fi\par}
     \vskip1.0ex
     {\usebeamerfont{section title}\color{white}\ifhuas@en\else\songti\fi\insertsection\par}
   \end{center}
-  \vskip1.2cm % ★尺寸★ 标题下方留白
-  % 水平章节导航（借鉴 SJTUBeamer maxplus 节页）：列出各节、当前节高亮
-  % ★字体★ 中文版此处为黑体（全局 CJK 黑体），其余节页元素保持宋体衬线
-  % ★字号★ \scriptsize（英文节名较长，缩小避免溢出）
-  {\scriptsize\usebeamercolor[fg]{section in head/foot}%
-    \insertsectionnavigationhorizontal{\textwidth}{\hskip0pt plus1filll}{\hskip0pt plus1filll}}%
-  \vskip0.9cm % ★尺寸★ 导航距页底
+  % 水平章节导航已按需求移除（原 \insertsectionnavigationhorizontal 一行）
+  \vskip2.6cm % ★尺寸★ 标题下方留白（原 1.2cm+导航行+0.9cm）
 }
 \setbeamerfont{section title}{size=\LARGE,series=\bfseries} % ★字号★
 
 %% ================= 目录页 =================
-%% ★样式★ 目录条目：编号/三角符号/缩进（leftskip）；★行距★ vskip=条目间距
-%% ★字号★ 节前目录页条目较多（黑体行高较大），条目字号略收一档防止溢出
-\setbeamerfont{section in toc}{size=\small}
-\setbeamerfont{subsection in toc}{size=\footnotesize}
+%% ★样式★ 节条目：立体圆圈（TikZ ball 渲染）内包汉字数字「一、二…」（英文版阿拉伯数字），
+%%        圆圈后留白再接节标题（借鉴 thubeamer 目录观感）；★行距★ vskip=条目间距
+%% ★字号★ 节条目 \Large（对齐 thubeamer 目录大小）；小节条目 \normalsize 保持层级
+\setbeamerfont{section in toc}{size=\Large,series=\bfseries}
+\setbeamerfont{subsection in toc}{size=\normalsize}
+\newcommand{\huas@tocitemskip}{0.8ex} % ★行距★ 目录条目间距（节前目录页组内收小）
 % ★文字★ 中文数字编号（一、二、三…；英文版保持阿拉伯数字）
 \newcommand{\huas@cnnum}[1]{\ifcase#1\or 一\or 二\or 三\or 四\or 五\or 六\or 七\or 八\or 九\or 十\fi}
 % 高亮样式（参考《浅谈自读课文的教学》目录）：当前节与其小节高亮，其余灰色
 \setbeamercolor{section in toc shaded}{fg=black!35}
 \setbeamercolor{subsection in toc shaded}{fg=black!35}
 \setbeamertemplate{subsection in toc}{%
-  \leavevmode\leftskip=2.2em{\color{huascoral}\raisebox{0.25ex}{\scriptsize$\blacktriangleright$}}\hspace{0.6em}\inserttocsubsection\par}
+  \leavevmode\leftskip=3em{\color{huascoral}\raisebox{0.25ex}{\small$\blacktriangleright$}}\hspace{0.6em}\inserttocsubsection\par}
+% ★调色★ ball color=主色 huasred（暖/冷主题自动切换，与整体色系相近）
+% ★尺寸★ minimum size=圆圈直径、\small=圈内数字字号、\hspace=圆圈与标题间距
 \setbeamertemplate{section in toc}{%
-  {\color{huasred}\ifhuas@en\inserttocsectionnumber.\else\huas@cnnum{\inserttocsectionnumber}、\fi}%
-  \hspace{0.6em}\inserttocsection\par\vskip0.1ex}
+  \leavevmode\usebeamerfont{section in toc}%
+  \tikz[baseline=-0.6ex]{\node[ball color=huasred,circle,text=white,inner sep=0pt,
+    minimum size=2.8ex,font=\bfseries\small]%
+    {\ifhuas@en\inserttocsectionnumber\else\huas@cnnum{\inserttocsectionnumber}\fi};}%
+  \hspace{1.4ex}\inserttocsection\par
+  \vskip\huas@tocitemskip % ★行距★ 条目间距（宏，节前目录页收小防溢出）
+}
 
 %% ================= 节前/小节前目录页（借鉴 thubeamer / NJIT）=================
 %% 高亮规则（参考 NJIT_LaTeX_Template）：当前节及其所有附属小节高亮；
@@ -383,7 +394,13 @@
     \begin{frame}{\ifhuas@en Contents\else 目录\fi}
       \tocbackground % 目录页背景：校门线稿
       \vskip-1em % ★位置★ 目录整体上移
-      \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+      % ★字号★ 节前/小节前目录条目多（黑体行高大），字号与条目间距收一档防止溢出
+      \begingroup
+        \setbeamerfont{section in toc}{size=\large,series=\bfseries}%
+        \setbeamerfont{subsection in toc}{size=\small}%
+        \renewcommand{\huas@tocitemskip}{0.05ex}%
+        \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+      \endgroup
     \end{frame}%
   }
 \fi
@@ -392,7 +409,13 @@
     \begin{frame}{\ifhuas@en Contents\else 目录\fi}
       \tocbackground % 目录页背景：校门线稿
       \vskip-1em % ★位置★ 目录整体上移
-      \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+      % ★字号★ 节前/小节前目录条目多（黑体行高大），字号与条目间距收一档防止溢出
+      \begingroup
+        \setbeamerfont{section in toc}{size=\large,series=\bfseries}%
+        \setbeamerfont{subsection in toc}{size=\small}%
+        \renewcommand{\huas@tocitemskip}{0.05ex}%
+        \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+      \endgroup
     \end{frame}%
   }
 \fi

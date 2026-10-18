@@ -13,6 +13,7 @@
 - [模板包速查](template/README.md)：运行环境、编译命令与常用选项。
 - [LaTeX 与 Beamer 从零教程](docs/LaTeX与Beamer从零教程.md)：从基本语法到完整汇报。
 - [模板使用与自定义说明](docs/模板使用与自定义说明.md)：颜色、字体、图片与版式参数。
+- [文档规范建议](docs/文档规范建议.md)：封面/节页/目录页版式规范条目与验收标准。
 - [开发计划与修订记录](docs/开发计划.md)：设计依据、实现状态与维护规范。
 
 中英文四版均使用 **XeLaTeX + BibTeX**。当前源码已在 Windows / TeX Live 2026 下验证；
@@ -42,8 +43,9 @@
 - **成熟版式骨架**（借鉴 thubeamer / NJIT / SJTUBeamer）：
   - 顶部 smoothbars 目录导航条（中文黑体）
   - 双行页脚：汇报人 + 汇报时间 / 单位 · 标题 + 翻页按键 + 页码
-  - 节前自动「渐变节页（编号 + 标题 + 水平章节导航）+ 目录页」
-- **目录页**：校门线稿背景水印、中文数字编号（一、二、三、四、）、
+  - 节前自动「渐变节页（编号 + 标题，整体偏上）+ 目录页」
+- **目录页**（借鉴 thubeamer 观感）：校门线稿背景水印、立体圆圈内包中文数字
+  （一、二、三、四；英文版阿拉伯数字）、条目大字号（节 `\Large`/小节 `\normalsize`），
   节前目录「当前节及其附属小节高亮、其余灰显且不显示其小节」（NJIT 规则）
 - **底部翻页按键**：白色线条三角 ◁ ▷（`[nonav]` 可关闭），显示位置与点击热区一致
 - **双色调**：`[blue]` 选项整套切换冷色调（蓝白），页面底色纯白
@@ -177,7 +179,7 @@ xelatex HUAS-Beamer.tex    # 第一次编译（可先不管参考文献）
 | 插图 | `\includegraphics[width=0.5\textwidth]{图片名}`（图片放 `figures/`，勿写扩展名） |
 | 表格 | `tabular` 环境；表头用模板自带的 `\huastableheader` + `\huastableheaderfont`（彩色表头） |
 | 公式 | 行内 `$E=mc^2$`；编号用 `\begin{equation} … \end{equation}` |
-| 引用文献 | 正文 `\cite{wang2019}`，条目写在 `reference.bib`，文末 frame 加 `\bibliographystyle{plain}\bibliography{reference}` |
+| 引用文献 | 正文 `\cite{zhang2023}`，条目写在 `reference.bib`，文末 frame 加 `\bibliographystyle{plain}\bibliography{reference}` |
 | 代码 | `\begin{lstlisting}[language=Python] … \end{lstlisting}`，**该 frame 必须加 `[fragile]`** |
 | 分步显示 | `\begin{itemize}[<+-| alert@+>] \item …`：逐条出现并高亮当前条 |
 
@@ -267,6 +269,7 @@ HUAS-Beamer/
 │  └─ HUAS-Beamer*.pdf        # 四版编译成品
 ├─ docs/
 │  ├─ 开发计划.md              # 调研分析、视觉规范、技术方案、开发规范
+│  ├─ 文档规范建议.md          # ★ 封面/节页/目录页版式规范条目
 │  ├─ LaTeX与Beamer从零教程.md  # 从基础语法到模板实战
 │  ├─ 模板使用与自定义说明.md   # ★ 全部可调整项速查
 │  └─ images/                 # README 预览图
@@ -291,7 +294,9 @@ HUAS-Beamer/
 | 底部色带英文校名 | 搜 `\huas@nameen` |
 | 全局行距 / 列表 / 表格行距 | 搜 `行距与列表间距` |
 | 翻页按键样式 | 搜 `\huas@navsymbols` |
-| 目录编号（中文数字） | 搜 `\huas@cnnum` |
+| 目录条目圆圈与字号 | 搜 `ball color`（圆圈）/ `section in toc`（字号） |
+| 目录汉字数字（一、二…） | 搜 `\huas@cnnum` |
+| 封面主体上移量 | 搜 `-0.5cm`（顶部 `\vskip` 负值） |
 | 中文黑体 / 西文 Times | 搜 `★字体★` |
 | 校训文字（保留定义、默认不显示） | 搜 `\huas@motto` |
 
@@ -327,7 +332,7 @@ HUAS-Beamer/
 - [HNU-Beamer-Template](https://github.com/zyh-hnu/HNU-Beamer-Template)（湖南大学）—— 封面色带布局、导师命令、表格辅助宏、构建脚本
 - [WHU-Beamer](https://github.com/hrtan99/WHU-Beamer)（武汉大学）—— 工程组织与文档结构
 - [SCU-Beamer-Theme](https://github.com/FvNCCR228/SCU-Beamer-Theme)（四川大学）—— latexmk 工程化配置、字体方案
-- [SJTUBeamer](https://github.com/sjtug/SJTUBeamer)（上海交通大学）—— 节页两行式结构与章节导航、professionalfonts
+- [SJTUBeamer](https://github.com/sjtug/SJTUBeamer)（上海交通大学）—— 节页两行式结构、professionalfonts
 
 ## 协议
 
