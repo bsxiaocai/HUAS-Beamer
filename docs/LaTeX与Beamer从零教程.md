@@ -3,6 +3,9 @@
 > **本教程写给谁**：完全没接触过 LaTeX 的同学。不管你是要做毕业答辩、开题报告、
 > 课程汇报还是学术会议展示，跟着本教程从零走一遍，就能独立做出自己的幻灯片。
 >
+> 本教程已按 2026-10-18 的仓库源码核对；中英文四版均使用 XeLaTeX，
+> 完整构建优先用 latexmk 自动处理参考文献和多轮编译。
+>
 > **本教程的分工**：
 > - 本文件 = **教材**：从零讲清 LaTeX 与 Beamer，再落到 HUAS-Beamer 模板的编辑与使用；
 > - [模板使用与自定义说明.md](模板使用与自定义说明.md) = **手册**：模板全部可调参数的速查表（本教程第 17 章会带你用它）；
@@ -61,7 +64,7 @@ LaTeX（读作「拉泰赫」）是一套**基于纯文本的排版系统**。�
 
 | 系统 | 推荐 | 说明 |
 | --- | --- | --- |
-| Windows | [TeX Live](https://tug.org/texlive/)（选 full 完整安装，约 4–7 GB） | 一次装全，永不缺宏包；本模板开发即基于 TeX Live |
+| Windows | [TeX Live](https://tug.org/texlive/)（可选 full 完整安装） | 可覆盖本模板使用的宏包；本模板开发基于 TeX Live |
 | Windows（轻量） | [MiKTeX](https://miktex.org/) | 小安装包，缺宏包时自动下载 |
 | macOS | [MacTeX](https://tug.org/mactex/) | 相当于 Mac 版 TeX Live |
 | Linux | `sudo apt install texlive-full`（Debian/Ubuntu） | 发行版仓库直接装 |
@@ -80,9 +83,13 @@ LaTeX（读作「拉泰赫」）是一套**基于纯文本的排版系统**。�
 
 ```bash
 xelatex --version
+bibtex --version
+latexmk --version
 ```
 
-能打印版本号（TeX Live 2024/2025 均可）即成功。
+三条命令分别验证引擎、参考文献工具和自动构建工具能否被终端找到。
+当前四版源码已在 Windows / TeX Live 2026 下验证；版本号能打印并不代表宏包、字体或编辑器配置都已就绪，
+还需实际编译模板。`pdflatex --version` 可验证另一个引擎，但本模板不使用它。
 
 ### 2.4 免安装方案：Overleaf
 
@@ -91,6 +98,20 @@ xelatex --version
 3. 左上角 `Menu → Compiler` 选 **XeLaTeX**，点 `Recompile`。
 
 > Overleaf 的好处是零配置、可多人协作；缺点是离线不可用、大项目编译慢。
+
+### 2.5 VS Code 的高亮、构建与黄色提示
+
+在 VS Code 中打开项目文件夹，安装并启用 LaTeX Workshop。
+`.tex` 的语言模式应为 LaTeX、`.sty` 为 LaTeX package；语法高亮取决于语言模式和颜色主题，
+与 TeX Live 引擎是否可用无直接关系。可选择 Dark+ 主题。
+
+自动处理参考文献的完整配置见[项目主页的 VS Code 配置](../README.md#vs-code-配置与排错)。
+项目 `.vscode/` 已被 Git 忽略，重新克隆不会自动带上本机配置，全局个人设置也不会随仓库同步。
+
+黄色提示要查看「问题」面板中的来源和说明：ChkTeX 的排版建议不等于编译错误，
+引用未解析、字体替代和缺字则需要检查构建日志。若安装了多个 LaTeX 扩展，
+避免重复检查；`mathematic.vscode-latex` 的检查开关为 `latex.linter.enabled`。
+重装 TeX Live 或修改 PATH 后，应完整重启 VS Code，让扩展进程读取新环境。
 
 ---
 
@@ -310,7 +331,7 @@ pdfLaTeX 处理中文很麻烦，**用 XeLaTeX + ctex 宏包**（本模板已内
 \bibliography{reference}
 ```
 
-**引用生效必须四步编译**（见 §6.2），否则显示 `[?]`。
+手动构建参考文献时使用四步编译（见 §6.2），也可让 latexmk 自动完成；只运行首轮时可能显示 `[?]`。
 
 ---
 
@@ -359,7 +380,8 @@ xelatex 论文      # 4. 修正所有交叉引用
 
 ## 第 7 章　Beamer 是什么
 
-Beamer 是 LaTeX 的**幻灯片文档类**：一个 frame 一页，编译产物就是 PDF 幻灯片。
+Beamer 是 LaTeX 的**幻灯片文档类**：frame 是组织内容的基本单位，编译产物是 PDF 幻灯片。
+普通 frame 对应一页；分步显示或自动分页会让一个 frame 生成多个 PDF 页面。
 它与 PPT 的本质区别同 §1.2——**写内容的不用管样式**，公式表格代码原生美观，
 而 HUAS-Beamer 模板替你把「湖南文理学院风格」的样式全部做好了。
 
@@ -367,6 +389,7 @@ Beamer 是 LaTeX 的**幻灯片文档类**：一个 frame 一页，编译产物�
 
 ```latex
 \documentclass[aspectratio=169]{beamer}  % 16:9；4:3 则去掉中括号
+\usepackage[fontset=fandol]{ctex}       % 此独立示例含中文，需加载中文支持
 
 \begin{document}
 
@@ -379,13 +402,14 @@ Beamer 是 LaTeX 的**幻灯片文档类**：一个 frame 一页，编译产物�
 \end{frame}
 
 \begin{frame}{第二页}
-  每个 frame 就是一页。
+  普通 frame 对应一页，分步显示时可以生成多页。
 \end{frame}
 
 \end{document}
 ```
 
-`xelatex` 编译即得两页幻灯片。**`\begin{frame}{标题}` = 一页**，就是 Beamer 的最小单位。
+`xelatex` 编译这个例子可得两页幻灯片。`\begin{frame}{标题}` 开始一个内容帧，
+普通内容帧对应一页，分步显示与自动分页时可能对应多页。
 
 ## 第 9 章　Beamer 核心元素
 
@@ -639,9 +663,12 @@ xelatex 我的答辩.tex     # 第二遍，装饰位置归位
 
 | 需求 | 做法 |
 | --- | --- |
-| 关闭所有自动目录页 | `\usepackage[notoc]{huasbeamer}` |
+| 关闭节前节标题页及目录页 | `\usepackage[notoc]{huasbeamer}` |
 | 小节前也出目录页 | `\usepackage[subsectiontoc]{huasbeamer}` |
 | 需要时手动插目录 | 在任意 frame 内写 `\tableofcontents` |
+
+`subsectiontoc` 独立控制小节前目录。若同时设置 `[notoc,subsectiontoc]`，
+节前两页会关闭，小节前目录仍保留；关闭所有自动目录时也需移除 `subsectiontoc`。
 
 ### 14.3 总目录页的写法
 
@@ -827,13 +854,16 @@ print(data["score"].mean())
 
 ### 17.4 图片素材（自定义说明 §5）
 
-换图三连：
+可直接通过命令替换封面校标与水印：
 
 ```latex
 \huassetlogo{我的校标.png}     % 封面校标
-\huassetbadge{我的校徽.png}    % 校徽
 \huassetbg{我的背景.png}       % 封面背景水印
 ```
+
+封面左上角校徽请在 `huasbeamer.sty` 的 `title page` 中搜索 `huas-badge-v2.png` 替换；
+正文校徽修改相应 `.tex` 的 `\includegraphics`。当前 `\huassetbadge` 与 `\huassetdeco`
+仅保存文件名，尚未被版式读取，调用它们不会改变现有图片。
 
 > 深色背景（渐变节页、致谢页）请用 `-white` 版线稿素材，浅色背景用原版。
 
@@ -842,19 +872,21 @@ print(data["score"].mean())
 | 内容 | 在哪改 |
 | --- | --- |
 | 底部色带英文校名 | 搜 `\huas@nameen` |
-| 中文校名 | 搜 `\huas@namecn` |
+| 中文校名 | 校标文字属于图片；`\huas@namecn` 目前仅为备用定义 |
 | 校训（默认不显示） | 搜 `\huas@motto` |
 | 致谢页文字 | `.tex` 最后一帧 |
 | 目录页标题（中英自动） | 搜 `Contents` |
 
 ### 17.6 字体（自定义说明 §7）
 
-- **西文与数字**：Times 体系（`Times New Roman`，缺字自动回退 `TeX Gyre Termes`），
+- **西文与数字**：Times 体系（`Times New Roman` 未安装时回退 `TeX Gyre Termes`，并非逐字缺字回退），
   数学 `newtxmath`；改入口搜 `★字体★ 学术标准`；
-- **中文**：默认 fandol 字库、**正文黑体**（节页标题局部宋体）；
-  想全篇宋体：删除搜 `★字体★ 内容中文` 里的 `\setCJKmainfont` 行；
-- **Windows 用户**想用系统字体：把 ctex 加载行改 `\RequirePackage[fontset=windows]{ctex}`，
-  黑体行改 `\setCJKmainfont{SimHei}`。
+- **中文**：使用 `ctex` 的 `fontset=none`，再显式配置 Fandol 字体；正文黑体、斜体楷体，节页标题局部宋体。
+  想把正文改成宋体，应将中文分支的主字体改为
+  `\setCJKmainfont{FandolSong-Regular}[BoldFont=FandolSong-Bold,ItalicFont=FandolKai-Regular]`，不要删除配置行；
+- **Windows 系统字体**：需修改 `\setCJKmainfont`、`\setCJKsansfont` 等对应命令和局部字体族，
+  只改 `fontset=windows` 会被后续显式配置覆盖，完整示例见[自定义说明 §7](模板使用与自定义说明.md#7-字体)；
+- **英文模式**：不加载 ctex，但加载 xeCJK，并配置中文宋体、黑体和仿宋，支持中文参考文献；仍须 XeLaTeX。
 
 ### 17.7 表格辅助宏（自定义说明 §8）
 
@@ -865,12 +897,21 @@ print(data["score"].mean())
 
 | 场景 | 命令 |
 | --- | --- |
-| 编一个版本 | `xelatex HUAS-Beamer.tex` ×2 |
+| 完整编译一个版本（含文献） | `latexmk HUAS-Beamer.tex` |
 | 含参考文献 | `xelatex → bibtex → xelatex ×2` |
 | 一键编四版 | Windows 双击 `makebeamer.bat`；macOS/Linux `make` |
 | 自动反复编译 | `latexmk HUAS-Beamer.tex`（配置在 `.latexmkrc`，已定 XeLaTeX + bibtex） |
 | 边写边预览 | `latexmk -pvc HUAS-Beamer.tex` |
 | Overleaf | 上传 `template/` 全部文件，编译器选 XeLaTeX |
+
+以上终端命令均在 `template/` 内运行。若使用 PowerShell，批处理命令写为
+`.\makebeamer.bat`，单版可用 `.\makebeamer.bat HUAS-Beamer-EN`。
+自定义 `.tex` 文件名可直接交给 latexmk，不受四个内置目标限制。
+迁移独立项目时，应同时保留主题、`figures/`、参考文献与 `.latexmkrc`。
+
+latexmk 会按需运行 BibTeX 和重复编译；本目录 `.latexmkrc` 指定了 XeLaTeX。
+Windows 批处理结束会清理辅助文件并暂停，需要保留 `.log` 排错时改用 latexmk 或手动命令。
+Makefile 只在依赖文件变化时重编译，单独换图后可用 `make -B` 强制构建。
 
 **实战注意**：
 
@@ -913,13 +954,13 @@ Day 4  彩排
 | `lstlisting` 页报错 | 该 frame 加 `[fragile]` |
 | 参考文献显示 `[?]` | 四步编译：`xelatex → bibtex → xelatex → xelatex` |
 | 封面/目录装饰偏移一次 | TikZ 需两轮编译，再编一遍 |
-| 中文编译报错 | 确认用 `xelatex`；英文版文档必须 `[en]` 选项 |
-| 中文字体缺失 | 默认 fandol 随 TeX Live 提供；可改 `fontset=windows`（§17.6） |
-| 节前目录页太多 | `[notoc]` 关闭，需要时手动 `\tableofcontents` |
+| 中文编译报错 | 中英文均用 `xelatex`，检查首个错误及字体/宏包是否齐全；`[en]` 负责英文界面 |
+| 中文字体缺失 | 检查 Fandol 安装；显式更换字体命令的方法见 §17.6 |
+| 节前目录页太多 | `[notoc]` 关闭节前节页和目录；小节目录需移除 `[subsectiontoc]` |
 | 目录条目溢出页脚 | 目录字号改 `\footnotesize`（自定义说明 §4.6） |
 | PDF 无法覆盖编译 | 关闭正在预览的阅读器 |
 | 页面底色想调 | `\definecolor{huasbg}{HTML}{...}`（§17.2） |
-| 想要纯英文幻灯片 | `\usepackage[en]{huasbeamer}` 或直接用 `-EN.tex` 版本 |
+| 想要英文幻灯片 | 使用 `[en]` 或 `-EN.tex` 版本，并自行将正文和文献改为英文，选项不负责翻译 |
 
 ---
 
@@ -951,7 +992,7 @@ Day 4  彩排
 
 | 命令 | 作用 |
 | --- | --- |
-| `\begin{frame}{标题}` | 一页幻灯片 |
+| `\begin{frame}{标题}` | 开始一个内容帧，分步显示时可生成多个 PDF 页面 |
 | `block / alertblock / exampleblock` | 三种彩色块 |
 | `columns / column` | 双栏 |
 | `<+->` `\only<n->{}` | 分步显示 |
@@ -963,7 +1004,7 @@ Day 4  彩排
 | --- | --- |
 | `\supervisor{}` | 封面导师行 |
 | `\reportdate{}` | 固定页脚汇报时间 |
-| `\huassetlogo / \huassetbadge / \huassetbg / \huassetdeco` | 换封面/背景素材 |
+| `\huassetlogo / \huassetbg` | 换封面校标/水印；其他图片按 §17.4 修改源码位置 |
 | `\tocbackground` | 目录页背景线稿 |
 | `\huastableheader / \huastableheaderfont` | 表格彩色表头 |
 | `\setframeofframes{--}` | 页码分隔符 |
@@ -976,7 +1017,7 @@ Day 4  彩排
 | 宏包 | `\usepackage` 加载的功能扩展 |
 | 文档类 | `\documentclass` 声明的文档类型（article / beamer…） |
 | 导言区 | `\begin{document}` 之前的设置区 |
-| frame | Beamer 的一页幻灯片 |
+| frame | Beamer 内容帧；普通帧对应一页，分步显示时可对应多个 PDF 页面 |
 | fragile | frame 选项：页内含代码等逐字符内容时必加 |
 | overlay | 分步显示的「动画层」 |
 | 三线表 | 学术表格样式（顶线、栏目线、底线） |

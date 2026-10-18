@@ -8,6 +8,16 @@
 以校徽红 + 校旗橙红为主色（并提供冷色调蓝白版本），融合校徽、校标、图书馆/校门建筑线稿等
 校园视觉元素，提供**中/英文 × 暖/冷色**共四个版本。
 
+## 文档导航
+
+- [模板包速查](template/README.md)：运行环境、编译命令与常用选项。
+- [LaTeX 与 Beamer 从零教程](docs/LaTeX与Beamer从零教程.md)：从基本语法到完整汇报。
+- [模板使用与自定义说明](docs/模板使用与自定义说明.md)：颜色、字体、图片与版式参数。
+- [开发计划与修订记录](docs/开发计划.md)：设计依据、实现状态与维护规范。
+
+中英文四版均使用 **XeLaTeX + BibTeX**。当前源码已在 Windows / TeX Live 2026 下验证；
+预览图片与仓库内 PDF 是静态成品，修改源码后需要重新编译。
+
 | 中文版封面 | 节标题页 |
 | --- | --- |
 | ![中文版封面](docs/images/cover-cn.png) | ![节标题页](docs/images/section-page.png) |
@@ -48,11 +58,17 @@
 
 ```bash
 cd template
-make              # Linux/macOS（编译全部四版）
-makebeamer.bat    # Windows 双击（同上）
+latexmk HUAS-Beamer.tex
 ```
 
-手动编译单个版本：
+`template/.latexmkrc` 已指定 XeLaTeX，latexmk 会按需运行 BibTeX 并重复编译。
+请在 `template/` 目录执行命令，确保能找到主题、图片和参考文献。
+
+编译全部四版：Linux/macOS 在该目录运行 `make`；Windows PowerShell 运行
+`.\makebeamer.bat`。Windows 脚本结束后会清理辅助文件并暂停；需要排错、保留日志时，
+优先使用 latexmk 或下方手动命令。更多目标与清理说明见[模板包速查](template/README.md)。
+
+手动编译单个版本（其他版本替换文件名，BibTeX 参数不带扩展名）：
 
 ```bash
 xelatex HUAS-Beamer.tex
@@ -81,6 +97,10 @@ xelatex HUAS-Beamer.tex
 > 页脚信息自动读取以上命令：汇报人、标题显示方括号短标题；汇报时间默认为编译日期，
 > 可用 `\reportdate{2025 年 6 月 10 日}` 固定。
 
+请将副本保存在 `template/` 内；若迁移到独立目录，一并复制 `huasbeamer.sty`、
+`figures/`、`reference.bib` 和 `.latexmkrc`。示例中的人名、日期、正文和文献条目均需按实际汇报修改，
+文献资料请自行核实。
+
 ## 从零开始：手把手做第一份幻灯片
 
 > 面向完全没有 LaTeX 基础的读者：装环境 → 跑通示例 → 学会基本写法 → 改成自己的内容。
@@ -91,7 +111,7 @@ xelatex HUAS-Beamer.tex
 | 方式 | 适合 | 操作 |
 | --- | --- | --- |
 | **A. Overleaf 在线**（推荐新手） | 不想装软件、快速上手 | 见下方详细步骤 |
-| **B. TeX Live + TeXstudio** | 长期使用、离线写作 | 安装 [TeX Live](https://tug.org/texlive/)（Windows 全量约 4 GB，MiKTeX 亦可）+ [TeXstudio](https://www.texstudio.org/) |
+| **B. TeX Live + TeXstudio** | 长期使用、离线写作 | 安装 [TeX Live](https://tug.org/texlive/)（MiKTeX 亦可）+ [TeXstudio](https://www.texstudio.org/) |
 | **C. VS Code + LaTeX Workshop** | 已在用 VS Code | 装好 TeX Live/MiKTeX 后安装 `LaTeX Workshop` 扩展 |
 
 **A. Overleaf 详细步骤**：注册登录 [overleaf.com](https://www.overleaf.com) → `New Project → Upload Project`
@@ -109,7 +129,8 @@ xelatex HUAS-Beamer.tex    # 第一次编译（可先不管参考文献）
 ```
 
 执行完会生成 `HUAS-Beamer.pdf`，打开确认效果与 [template/HUAS-Beamer.pdf](template/HUAS-Beamer.pdf) 一致，
-说明环境没问题。Windows 也可直接双击 `makebeamer.bat` 一次编译全部四版。
+说明基本编译链可用。首轮的目录、页码与引用可能尚未稳定，完整结果请运行
+`latexmk HUAS-Beamer.tex`。Windows 运行批处理前，终端工作目录应为 `template/`。
 
 ### 第 3 步 · 认识文档骨架
 
@@ -135,7 +156,7 @@ xelatex HUAS-Beamer.tex    # 第一次编译（可先不管参考文献）
 
 \section{第一章标题}                    % 章：自动出「渐变节页 + 目录页」
 \subsection{小节标题}                   % 小节：目录里显示在章下
-\begin{frame}{这一页的标题}             % 一个 frame = 一页幻灯片
+\begin{frame}{这一页的标题}             % 普通 frame 对应一页；分步显示可生成多页
   这里写正文……
 \end{frame}
 \end{document}
@@ -182,13 +203,50 @@ xelatex HUAS-Beamer.tex    # 第一次编译（可先不管参考文献）
 ```latex
 \usepackage{huasbeamer}                % 中文暖色调（默认）
 \usepackage[blue]{huasbeamer}          % 冷色调（蓝白）
-\usepackage[en]{huasbeamer}            % 英文模式
+\usepackage[en]{huasbeamer}            % 英文模式（不加载 ctex，保留 xeCJK 中文字形支持）
 \usepackage[notoc]{huasbeamer}         % 关闭节前自动「节页+目录页」
 \usepackage[subsectiontoc]{huasbeamer} % 小节前也出目录页
 \usepackage[nonav]{huasbeamer}         % 关闭底部翻页按键
 ```
 
 选项可组合，例如 `\usepackage[blue,en]{huasbeamer}`。
+
+`notoc` 关闭节前的节标题页与目录页；`subsectiontoc` 独立控制小节前目录。
+两者组合时，小节前目录仍会生成。`nonav` 只关闭页脚的前后翻页按键，保留页码与顶栏。
+
+## VS Code 配置与排错
+
+使用 **LaTeX Workshop** 扩展，打开本仓库文件夹，再打开需要编译的 `template/HUAS-Beamer*.tex`。
+语法颜色由语言模式和主题控制，与 `xelatex --version` 是否成功是两件事。
+`.tex` 语言模式应为 LaTeX，`.sty` 应为 LaTeX package；可选用 Dark+ 主题增强颜色区分。
+
+需要自动处理参考文献时，在项目的 `.vscode/settings.json` 中配置：
+
+```json
+{
+  "latex-workshop.latex.build.enableMagicComments": false,
+  "latex-workshop.latex.recipe.default": "first",
+  "latex-workshop.latex.recipes": [
+    { "name": "latexmk (XeLaTeX + BibTeX)", "tools": ["latexmk-xelatex"] }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk-xelatex",
+      "command": "latexmk",
+      "args": ["-xelatex", "-synctex=1", "-interaction=nonstopmode", "-file-line-error", "-halt-on-error", "-outdir=%OUTDIR%", "%DOC%"]
+    }
+  ]
+}
+```
+
+此配置让构建配方统一使用 latexmk，源文件的 `% !TEX program = XeLaTeX` 不再单独触发一次编译。
+保存后使用 LaTeX Workshop 的构建命令。`.vscode/` 被本仓库忽略，以上配置需在新电脑手动创建；
+个人的全局主题、高亮和扩展设置也不随 Git 分发。
+
+黄色波浪线要看「问题」面板中的来源：ChkTeX 提供静态排版建议，LaTeX 编译日志则可能提示
+未解析的引用、缺字或字体替代。若同时安装 `mathematic.vscode-latex` 与 LaTeX Workshop，
+可禁用前者的重复检查（`"latex.linter.enabled": false`）；不要仅凭 PDF 能生成就忽略编译警告。
+重装 TeX Live 后，终端能找到命令但扩展仍找不到时，完整重启 VS Code，使扩展进程重新读取 PATH。
 
 ## 目录结构
 
@@ -209,15 +267,16 @@ HUAS-Beamer/
 │  └─ HUAS-Beamer*.pdf        # 四版编译成品
 ├─ docs/
 │  ├─ 开发计划.md              # 调研分析、视觉规范、技术方案、开发规范
+│  ├─ LaTeX与Beamer从零教程.md  # 从基础语法到模板实战
 │  ├─ 模板使用与自定义说明.md   # ★ 全部可调整项速查
 │  └─ images/                 # README 预览图
-├─ examples/                  # 调研参考模板（清华/南工程/厦大/湖大/武大/川大/上交等）
-└─ research/                  # 学校视觉素材（校徽/校旗/建筑线稿/校训等）
+├─ examples/                  # 可选本地调研目录（Git 忽略，不随仓库分发）
+└─ research/                  # 可选本地原始素材目录（Git 忽略，不随仓库分发）
 ```
 
 ## 自定义
 
-**所有可调整项**（内容填写、颜色、尺寸、图片、文字、字体）详见
+**主要调整入口**（内容填写、颜色、尺寸、图片、文字、字体）详见
 **[docs/模板使用与自定义说明.md](docs/模板使用与自定义说明.md)**；
 样式文件 `huasbeamer.sty` 内亦以 `★调色★ / ★尺寸★ / ★图片★ / ★文字★ / ★字号★ / ★行距★`
 注释标注每个配置点。
@@ -243,8 +302,8 @@ HUAS-Beamer/
 | 代码页 `lstlisting` 报错 | 该 frame 加 `[fragile]`：`\begin{frame}[fragile]{标题}` |
 | 参考文献显示 `[?]` | 按 `xelatex → bibtex → xelatex → xelatex` 四步编译 |
 | 封面/目录装饰位置偏移一次 | TikZ `remember picture` 需两轮编译，属正常现象 |
-| 中文字体缺失 | 默认 TeX Live 自带 fandol；Windows 可改 `fontset=windows`（见自定义说明） |
-| 英文版需全英文编译 | 用 `\usepackage[en]{huasbeamer}`（不加载 ctex） |
+| 中文字体缺失 | 当前显式使用 Fandol；检查字体安装，或按[字体说明](docs/模板使用与自定义说明.md#7-字体)修改对应字体命令 |
+| 英文版含中文参考文献 | `[en]` 使用 xeCJK 提供中文字体支持，仍须 XeLaTeX；文献内容不会自动翻译 |
 | PDF 被占用无法覆盖编译 | 关闭正在预览该 PDF 的阅读器后重新编译 |
 
 ## 命名规范（自 v1.8 起）
