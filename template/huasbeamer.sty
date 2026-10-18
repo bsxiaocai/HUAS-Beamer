@@ -3,7 +3,7 @@
 %% Hunan University of Arts and Science (HUAS) Beamer Theme
 %%=======================================================================
 %% 版本：v1.0（2025/06）
-%% 编译：XeLaTeX（中文默认）；英文文档加 [en] 选项后可用任意引擎
+%% 编译：XeLaTeX（中英文均使用 fontspec）；[en] 选项不加载 ctex
 %%
 %% ★ 快速使用 ★
 %%   \documentclass[aspectratio=169]{beamer}
@@ -26,7 +26,7 @@
 %%                  线稿宽度/logo 宽度/横线长度等）
 %%   4. 图片      → \huassetlogo{} \huassetbadge{} \huassetdeco{} \huassetbg{}
 %%   5. 文字      → \huas@namecn/\huas@nameen/\huas@motto（校名/校训）
-%%   6. 字体      → 下方 ctex 的 fontset 选项（fandol / windows）
+%%   6. 字体      → 下方 \setCJKmainfont / \setCJKsansfont 等字体配置
 %%
 %% 设计来源（有机结合三个高校模板 + 四个高校模板调研）：
 %%   - thubeamer（清华大学）：版式骨架、双行页脚、节前目录页、封面/封底范式
@@ -59,12 +59,27 @@
 \RequirePackage{amsmath,amssymb,amsthm}
 \RequirePackage{booktabs}
 \RequirePackage{colortbl} % 表格行着色（\huastableheader 宏使用）
-\ifhuas@en\else
-  % ★字体★ fontset=fandol（TeX Live 自带，跨平台）；
-  % Windows 用户可改为 fontset=windows（宋体/黑体/楷体）
-  \RequirePackage[fontset=fandol]{ctex}
+\ifhuas@en
+  % 英文正文的参考文献也可能含中文，保留 CJK 字形支持。
+  \RequirePackage{xeCJK}
+  \setCJKmainfont{FandolSong-Regular}[BoldFont=FandolSong-Bold,ItalicFont=FandolKai-Regular]
+  \setCJKsansfont{FandolHei-Regular}[BoldFont=FandolHei-Bold]
+  \setCJKmonofont{FandolFang-Regular}
+\else
+  % ★字体★ 使用 TeX Live 自带 Fandol；显式配置，避免先载入宋体再覆盖主字体。
+  \RequirePackage[fontset=none]{ctex}
   % ★字体★ 内容中文使用黑体（参考《浅谈自读课文的教学》论文正文；西文/数字仍为 Times）
-  \setCJKmainfont{FandolHei-Regular}[BoldFont=FandolHei-Bold]
+  \setCJKmainfont{FandolHei-Regular}[BoldFont=FandolHei-Bold,ItalicFont=FandolKai-Regular]
+  \setCJKsansfont{FandolHei-Regular}[BoldFont=FandolHei-Bold,ItalicFont=FandolKai-Regular]
+  \setCJKmonofont{FandolFang-Regular}
+  \setCJKfamilyfont{zhsong}{FandolSong-Regular}[BoldFont=FandolSong-Bold]
+  \setCJKfamilyfont{zhhei}{FandolHei-Regular}[BoldFont=FandolHei-Bold]
+  \setCJKfamilyfont{zhkai}{FandolKai-Regular}
+  \setCJKfamilyfont{zhfs}{FandolFang-Regular}
+  \providecommand{\songti}{\CJKfamily{zhsong}}
+  \providecommand{\heiti}{\CJKfamily{zhhei}}
+  \providecommand{\kaishu}{\CJKfamily{zhkai}}
+  \providecommand{\fangsong}{\CJKfamily{zhfs}}
 \fi
 
 %% ================= 西文/数字字体（★字体★ 学术标准）=================
@@ -78,6 +93,9 @@
 \usefonttheme{serif}           % 正文/标题使用衬线（学术风格）
 \usefonttheme{professionalfonts} % 数学字体交给 newtxmath，不受 beamer 覆盖
 \RequirePackage{newtxmath}     % 数学字体：Times 风格（学术标准）
+% newtxmath 的数学运算符需要 OT1 字体，不能使用 fontspec 的系统字体族。
+\SetSymbolFont{operators}{normal}{OT1}{ntxtlf}{m}{n}
+\SetSymbolFont{operators}{bold}{OT1}{ntxtlf}{b}{n}
 
 %% ================= 色彩系统（★调色★）=================
 %% 默认暖色调：取色自 research/ 素材（Python/Pillow 像素采样）

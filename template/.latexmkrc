@@ -1,4 +1,4 @@
-# latexmk 配置（可选）：latexmk demo-cn.tex 或 latexmk -pvc demo-cn.tex
+# latexmk 配置（可选）：latexmk HUAS-Beamer.tex 或 latexmk -pvc HUAS-Beamer.tex
 # 参考 SCU-Beamer-Theme 的工程化配置（简化版）
 
 # xelatex 引擎（5 = xelatex）
